@@ -1,0 +1,71 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_A (de)
+AT "http://www.geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS UNQUALIFIED INTERLIS;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+	VIEW v_Leitung
+    	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Leitung;
+    =
+        ALL OF Leitung;
+                
+         !! Topologie Check: PAA Leitungen dürfen keine Leitung_nachRef haben
+         !!@ ilivalid.check = error
+         !!@ ilivalid.msg = "TOPOLOGY PAA Leitungen dürfen kein Leitung_nach Attribut haben"         
+         !!@ name = A_PAA_6000_02                        
+          !!MANDATORY CONSTRAINT NOT (DEFINED (Leitung_nachRef))
+            !!  OR
+              !!isEnumSubVal(FunktionHierarchisch, #SAA);
+        
+         !! Frage: Trifft eh nie ein, da bereits im VSADSSMINI_2020_LV95-Modell
+         !! zwingend ist?
+         !! PAA Constraint (gilt nur für PAA)
+         !!@ ilivalid.check = error
+         !!!!@ ilivalid.msg = "MANDATORY Bezeichnung"         
+         !!@ name = A_PAA_6000_04               
+         !!MANDATORY CONSTRAINT DEFINED (Bezeichnung)
+           !!                                      OR
+             !!                                    isEnumSubVal(FunktionHierarchisch, #SAA);
+         !! PAA Constraint (gilt nur für PAA)
+         !!@ ilivalid.check = error
+         !!!!@ ilivalid.msg = "MANDATORY Finanzierung"
+         !!@ name = A_PAA_6000_06         
+         !!MANDATORY CONSTRAINT DEFINED (Finanzierung)
+          !!                                       OR
+            !!                                     isEnumSubVal(FunktionHierarchisch, #SAA);
+                                                 
+        !! Allgemeiner Constraint (gilt für PAA und SAA)
+        !!@ ilivalid.check = error
+        !!!!@ ilivalid.msg = "MANDATORY FunktionHierarchisch"
+        !!@ name = A_PAA_6000_07         
+         !!MANDATORY CONSTRAINT DEFINED (FunktionHierarchisch);
+         
+        !! PAA Constraint (gilt nur für PAA)         
+        !!@ ilivalid.check = error
+        !!!!@ ilivalid.msg = "MANDATORY FunktionHydraulisch"
+        !!@ name = A_PAA_6000_09
+        MANDATORY CONSTRAINT DEFINED (FunktionHydraulisch)
+                                                 OR
+                                                 isEnumSubVal(FunktionHierarchisch, #SAA);
+
+    END v_Leitung;
+    
+         !! CONSTRAINTS OF Leitung =
+
+!!@ ilivalid.msg = "TOPOLOGY PAA Leitungen dürfen kein Leitung_nach Attribut haben" 
+!!@ name = A_PAA_6000_02
+         !! MANDATORY CONSTRAINT NOT ( DEFINED (Leitung_nachRef))
+           !!   OR
+             !! isEnumSubVal(FunktionHierarchisch, #SAA);
+      !!END; !! of Leitung
+    
+    
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_A.
