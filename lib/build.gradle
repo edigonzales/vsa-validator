@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://jars.interlis.ch" }
+}
+
+dependencies {
+    api 'ch.interlis:iox-ili:1.21.4'
+    api 'ch.interlis:ili2c-tool:5.1.5'
+    api 'ch.interlis:ili2c-core:5.1.5'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
