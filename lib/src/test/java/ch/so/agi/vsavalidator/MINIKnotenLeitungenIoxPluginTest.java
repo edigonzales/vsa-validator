@@ -56,9 +56,6 @@ public class MINIKnotenLeitungenIoxPluginTest {
             ili2cConfig.addFileEntry(fileEntry);
         }        
         {
-            // TODO: rename
-            // Damit nur diese Funktion geprüft werden kann. 
-            // Z.B. Validierung_MINI_Knoten_Leitungen.ili
             FileEntry fileEntry = new FileEntry("src/test/data/Validierung_MINI_Knoten_Leitungen.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
         }
