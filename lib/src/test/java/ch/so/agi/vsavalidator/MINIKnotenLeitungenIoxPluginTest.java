@@ -68,14 +68,15 @@ public class MINIKnotenLeitungenIoxPluginTest {
         XtfReader reader = new XtfReader(xtffile);
         Settings settings = new Settings();
         
-//        Map<String,Class> newFunctions = new HashMap<String,Class>();
-//        newFunctions.put("SO_FunctionsExt.isValidDocumentsCycle", IsValidDocumentsCycleIoxPlugin.class);
-//        settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
+        Map<String,Class> newFunctions = new HashMap<String,Class>();
+        newFunctions.put("MINIFunction.MINI_Knoten_Leitungen", MINIKnotenLeitungenIoxPlugin.class);
+        settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
 
         ch.interlis.iox_j.validator.Validator validator=null;
         LogEventFactory errFactory = new LogEventFactory();
         PipelinePool pool = new PipelinePool();
         ValidationConfig modelConfig = new ValidationConfig();
+        modelConfig.setConfigValue(ValidationConfig.PARAMETER,ValidationConfig.ADDITIONAL_MODELS, "VSADSSMINI_2020_LV95_Validierung_FP;");
         validator = new ch.interlis.iox_j.validator.Validator(td, modelConfig, logger, errFactory, pool, settings);
         IoxEvent event = null;
         do {
