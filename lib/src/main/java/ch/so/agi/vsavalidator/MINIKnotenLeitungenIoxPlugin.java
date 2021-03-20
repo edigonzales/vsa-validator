@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import ch.ehi.basics.settings.Settings;
 import ch.interlis.ili2c.metamodel.TransferDescription;
@@ -26,7 +27,7 @@ public class MINIKnotenLeitungenIoxPlugin implements InterlisFunction {
     private String LEITUNG_OBJECT_TAG = "VSADSSMINI_2020_LV95.VSADSSMini.Leitung";
     private String KNOTEN_NACH_REF = "Knoten_nachRef";
     private String KNOTEN_VON_REF = "Knoten_vonRef";
-    private String CACHE_NAME = "ch.so.agi.vsavalidator.MINIKnotenLeitungen.Leitungen_Knoten";
+    private String CACHE_NAME = "ch.so.agi.vsavalidator.MINIKnotenLeitungen.Leitungen";
 
     @Override
     public Value evaluate(String validationKind, String usageScope, IomObject mainObj, Value[] actualArguments) {
@@ -38,26 +39,34 @@ public class MINIKnotenLeitungenIoxPlugin implements InterlisFunction {
         }
 
         IoxDataPool pipelinePool = (IoxDataPool) settings.getTransientObject(InterlisFunction.IOX_DATA_POOL);
-        Set<String> cache = (HashSet<String>) pipelinePool.getIntermediateValue(CACHE_NAME);
-        System.out.println(cache);
-
-        System.out.println("foo bar");
-//        System.out.println(actualArguments[0].getComplexObjects());
+        Set<IomObject> cache = (HashSet<IomObject>) pipelinePool.getIntermediateValue(CACHE_NAME);
 
         List<IomObject> iomObjects = (List<IomObject>) actualArguments[0].getComplexObjects();
-        System.out.println(iomObjects.size());
+
+        IomObject knotenIomObj = iomObjects.get(0);
+        String knotenObjId = knotenIomObj.getobjectoid();
         
-        IomObject iomObj = iomObjects.get(0);
-        System.out.println(iomObj.getobjectoid());
-        String objId = iomObj.getobjectoid();
-        
-        System.out.println(cache.contains(objId));
-        
-        
-        System.out.println("--------------------------------------------------\n");
-        
-        // TODO: korrekter Rückgabewert, sonst NPE.
-        return Value.createSkipEvaluation();
+        List<IomObject> leitungenObjects = cache
+        .stream()
+        .filter(iomObj -> {
+            IomObject nachKnoten = iomObj.getattrobj(KNOTEN_NACH_REF, 0);
+            if (nachKnoten != null) {
+                if (nachKnoten.getobjectrefoid().equals(knotenObjId)) {
+                    return true;
+                }
+            } 
+            IomObject vonKnoten = iomObj.getattrobj(KNOTEN_VON_REF, 0);
+            if (vonKnoten != null) {
+                if (vonKnoten.getobjectrefoid().equals(knotenObjId)) {
+                    return true;
+                }
+            } 
+            return false;
+            
+        }).collect(Collectors.toList());
+                 
+        // HINT: korrekter Rückgabewert, sonst NPE.
+        return new Value(leitungenObjects);
     }
 
     @Override
@@ -70,8 +79,6 @@ public class MINIKnotenLeitungenIoxPlugin implements InterlisFunction {
             IoxValidationConfig validationConfig, ObjectPool objectPool, 
             LogEventFactory logEventFactory) {
         
-        System.out.println("init...");
-
         this.settings = settings;
         this.logger = logEventFactory;
         this.logger.setValidationConfig(validationConfig);
@@ -80,28 +87,18 @@ public class MINIKnotenLeitungenIoxPlugin implements InterlisFunction {
         
         IoxDataPool pipelinePool = (IoxDataPool) settings.getTransientObject(InterlisFunction.IOX_DATA_POOL);
 
-        if (pipelinePool.getIntermediateValue("ch.so.meincache") == null) {
-            System.out.println("einmalig");
-            pipelinePool.setIntermediateValue("ch.so.meincache", "meincache");
-            
-            Set<String> knotenSet = new HashSet<String>();
+        if (pipelinePool.getIntermediateValue(CACHE_NAME) == null) {
+            Set<IomObject> leitungenSet = new HashSet<IomObject>();
             objectPool.getBasketIds().stream().map((basketId) -> (objectPool.getObjectsOfBasketId(basketId)).valueIterator()).forEach((Iterator objectIterator) -> {
                 while (objectIterator.hasNext()) {
                     IomObject iomObj = (IomObject) objectIterator.next();
                     if (iomObj != null && iomObj.getobjecttag().equals(LEITUNG_OBJECT_TAG)) {
-                        IomObject nachKnoten = iomObj.getattrobj(KNOTEN_NACH_REF, 0);
-                        if (nachKnoten != null) {
-                            knotenSet.add(nachKnoten.getobjectrefoid());
-                        }
-                        IomObject vonKnoten = iomObj.getattrobj(KNOTEN_VON_REF, 0);
-                        if (vonKnoten != null) {
-                            knotenSet.add(vonKnoten.getobjectrefoid());
-                        }
+                        leitungenSet.add(iomObj);
+                        // TODO: Nur die notwendingen Attribute? z.B. Geometrie löschen? Oder neues, minimales IomObject?
                     }
                 }
             });
-            pipelinePool.setIntermediateValue(CACHE_NAME, knotenSet);
-            System.out.println(knotenSet);
+            pipelinePool.setIntermediateValue(CACHE_NAME, leitungenSet);
         }
     }
 }

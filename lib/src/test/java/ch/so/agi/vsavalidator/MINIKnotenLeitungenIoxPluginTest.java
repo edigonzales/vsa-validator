@@ -1,5 +1,6 @@
 package ch.so.agi.vsavalidator;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
@@ -87,12 +88,11 @@ public class MINIKnotenLeitungenIoxPluginTest {
     }
     
     @Test
-    public void mitKeinerLeitungVerbundenerKnoten() throws Exception {
-        System.out.println("fubar");
-        
+    public void mitKeinerLeitungVerbundenerKnoten() throws Exception {        
         LogCollector logger = new LogCollector();
         runValidation(new File(TEST_IN+"mit_keiner_leitung_verbundener_knoten.xtf"), logger);
-
+        
+        assertEquals(1, logger.getErrs().size());
     }
     
     
