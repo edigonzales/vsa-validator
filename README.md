@@ -1,5 +1,10 @@
 # vsa-validator
 
+## todo
+- Subprojekt mit functional tests, d.h. sämtliche Tests auch solche, die keinen Code benötigen.
+- Versionen der Libs abstimmen. Am Ende des Tages muss es mit ilivalidator funktionieren.
+
+
 ## ilivalidator
 
 Beispielaufrufe:

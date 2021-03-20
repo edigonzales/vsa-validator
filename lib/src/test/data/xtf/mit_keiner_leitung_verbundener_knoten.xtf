@@ -39,6 +39,8 @@
         <BetreiberRef REF="deg5mQXX20000001"/>
         <EigentuemerRef REF="deg5mQXX20000001"/>
       </VSADSSMINI_2020_LV95.VSADSSMini.Knoten>
+      
+      <!-- Dieser Knoten ist mit keiner Leitung verbunden. -->
       <VSADSSMINI_2020_LV95.VSADSSMini.Knoten TID="deg5mQXX20001003">
         <Letzte_Aenderung>20201116</Letzte_Aenderung>
         <DatenherrRef REF="deg5mQXX20000001"/>
