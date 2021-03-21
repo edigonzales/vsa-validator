@@ -1,6 +1,7 @@
 # vsa-validator
 
 ## todo
+- Im Sinne von Unit-Tests sollten die Tests im Code nicht die kombinierten Constraints prüfen, sondern nur die Funktion selber. Die VSA-Constraints werden in den Funktionstests geprüft. (MINI_Knoten_Leitungen und MINI_Knoten_Leitungen_wegfuehrend)
 - Subprojekt mit functional tests, d.h. sämtliche Tests auch solche, die keinen Code benötigen.
 - Versionen der Libs abstimmen. Am Ende des Tages muss es mit ilivalidator funktionieren.
 
@@ -30,3 +31,4 @@ java -jar /Users/stefan/apps/ilivalidator-1.11.9/ilivalidator-1.11.9.jar --model
 | ... | ... | [ ] |
 
 
+Sonderbauwerk (2 wegführende Leitungen). Funktion == Sonderbauwerk. -> Kein Fehler

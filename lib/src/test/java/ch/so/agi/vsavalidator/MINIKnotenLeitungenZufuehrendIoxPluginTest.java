@@ -25,7 +25,7 @@ import ch.interlis.iox_j.logging.LogEventFactory;
 import ch.interlis.iox_j.validator.ValidationConfig;
 import ch.interlis.iox_j.validator.Validator;
 
-public class MINIKnotenLeitungenWegfuehrendIoxPluginTest {
+public class MINIKnotenLeitungenZufuehrendIoxPluginTest {
     private TransferDescription td = null;
     private static final String TEST_IN = "src/test/data/xtf/";
 
@@ -53,7 +53,7 @@ public class MINIKnotenLeitungenWegfuehrendIoxPluginTest {
             ili2cConfig.addFileEntry(fileEntry);
         }        
         {
-            FileEntry fileEntry = new FileEntry("src/test/data/Validierung_MINI_Knoten_Leitungen_wegfuehrend.ili", FileEntryKind.ILIMODELFILE);
+            FileEntry fileEntry = new FileEntry("src/test/data/Validierung_MINI_Knoten_Leitungen_zufuehrend.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
         }
         td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);
@@ -66,7 +66,7 @@ public class MINIKnotenLeitungenWegfuehrendIoxPluginTest {
         Settings settings = new Settings();
         
         Map<String,Class> newFunctions = new HashMap<String,Class>();
-        newFunctions.put("MINIFunction.MINI_Knoten_Leitungen_wegfuehrend", MINIKnotenLeitungenWegfuehrendIoxPlugin.class);
+        newFunctions.put("MINIFunction.MINI_Knoten_Leitungen_zufuehrend", MINIKnotenLeitungenZufuehrendIoxPlugin.class);
         settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
 
         ch.interlis.iox_j.validator.Validator validator=null;
@@ -81,11 +81,19 @@ public class MINIKnotenLeitungenWegfuehrendIoxPluginTest {
             validator.validate(event);
         } while (!(event instanceof EndTransferEvent));
     }
-  
+
     @Test
-    public void nichtAlsSolchesAttributiertesSonderbauwerk() throws Exception {        
+    public void zufuehrendeLeitungen_Ok() throws Exception {
         LogCollector logger = new LogCollector();
-        runValidation(new File(TEST_IN+"nicht_als_solches_attributiertes_Sonderbauwerk.xtf"), logger);
+        runValidation(new File(TEST_IN+"zufuehrende_Leitungen_Ok.xtf"), logger);
+        
+        assertEquals(0, logger.getErrs().size());
+    }
+    
+    @Test
+    public void zufuehrendeLeitungen_Fail() throws Exception {
+        LogCollector logger = new LogCollector();
+        runValidation(new File(TEST_IN+"zufuehrende_Leitungen_Fail.xtf"), logger);
         
         assertEquals(1, logger.getErrs().size());
     }
