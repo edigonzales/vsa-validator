@@ -1,0 +1,4 @@
+  
+allprojects {
+    apply from: "$rootDir/gradle/versioning.gradle"    
+}

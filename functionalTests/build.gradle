@@ -7,15 +7,8 @@ repositories {
     maven { url "http://jars.interlis.ch" }
 }
 
-configurations {
-    jar.archiveName = "vsavalidator-functions-"+version+".jar"
-}
-
 configurations.all {
     resolutionStrategy {
-        force 'ch.interlis:iox-ili:1.21.6+'
-        force 'ch.interlis:ili2c-tool:5.2.0'
-        force 'ch.interlis:ili2c-core:5.2.0'    
         force 'ch.ehi:ehibasics:1.4.0'
 
         //cacheDynamicVersionsFor 10*60, 'seconds'
@@ -24,13 +17,13 @@ configurations.all {
 }
 
 dependencies {
+    api 'ch.interlis:ilivalidator:1.11.10-SNAPSHOT'
     api 'ch.interlis:iox-ili:1.21.6+'
     api 'ch.interlis:ili2c-tool:5.2.0'
     api 'ch.interlis:ili2c-core:5.2.0'
-    api 'ch.ehi:ehibasics:1.4.0'
-
+    
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'    
 }
 
 tasks.named('test') {

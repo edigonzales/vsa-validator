@@ -1,19 +1,14 @@
 # vsa-validator
 
-## todo
+## Todo
+- clean repo
 - Im Sinne von Unit-Tests sollten die Tests im Code nicht die kombinierten Constraints prüfen, sondern nur die Funktion selber. Die VSA-Constraints werden in den Funktionstests geprüft. (MINI_Knoten_Leitungen und MINI_Knoten_Leitungen_wegfuehrend)
 - Subprojekt mit functional tests, d.h. sämtliche Tests auch solche, die keinen Code benötigen.
 - Versionen der Libs abstimmen. Am Ende des Tages muss es mit ilivalidator funktionieren.
+- Test der XTF mit VSA-Checker
 
-
-## ilivalidator
-
-Beispielaufrufe:
-
-```
-java -jar /Users/stefan/apps/ilivalidator-1.11.9/ilivalidator-1.11.9.jar --modeldir "models;http://models.interlis.ch;https://vsa.ch/models" --config models/config.toml data/1020.xtf
-```
-
+## Requirements
+- iox-ili >= 1.21.6-SNAPSHOT (see https://github.com/claeis/iox-ili/commit/7613518d82d7f1ac40e4b52d84150212c313e137)
 
 
 ## VSADSSMINI_2020_LV95_CHECK_FP
@@ -30,5 +25,3 @@ java -jar /Users/stefan/apps/ilivalidator-1.11.9/ilivalidator-1.11.9.jar --model
 | 2110 | needs coding. Es gibt Math.min(). Funktionsweise noch zu verstehen. | [ ] |
 | ... | ... | [ ] |
 
-
-Sonderbauwerk (2 wegführende Leitungen). Funktion == Sonderbauwerk. -> Kein Fehler
