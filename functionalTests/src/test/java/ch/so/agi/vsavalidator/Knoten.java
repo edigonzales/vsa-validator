@@ -45,7 +45,6 @@ public class Knoten {
         assertFalse(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-//        System.out.println(content);
         assertTrue(content.contains("Error: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid 34B23C95-8F24-4B3D-A4C3-5997B4A7FFE7: value <34B23C95-8F24-4B3D-A4C3-5997B4A7FFE7> is not a valid OID"));
     }
 }
