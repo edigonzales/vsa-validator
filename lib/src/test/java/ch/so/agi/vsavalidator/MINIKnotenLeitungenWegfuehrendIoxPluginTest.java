@@ -25,7 +25,7 @@ import ch.interlis.iox_j.logging.LogEventFactory;
 import ch.interlis.iox_j.validator.ValidationConfig;
 import ch.interlis.iox_j.validator.Validator;
 
-public class MINIKnotenLeitungenIoxPluginTest {
+public class MINIKnotenLeitungenWegfuehrendIoxPluginTest {
     private TransferDescription td = null;
     private static final String TEST_IN = "src/test/data/xtf/";
 
@@ -53,20 +53,20 @@ public class MINIKnotenLeitungenIoxPluginTest {
             ili2cConfig.addFileEntry(fileEntry);
         }        
         {
-            FileEntry fileEntry = new FileEntry("src/test/data/Validierung_MINI_Knoten_Leitungen.ili", FileEntryKind.ILIMODELFILE);
+            FileEntry fileEntry = new FileEntry("src/test/data/Validierung_MINI_Knoten_Leitungen_wegfuehrend.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
         }
         td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);
         assertNotNull(td);
     }
-    
+
     private void runValidation(File xtffile, LogCollector logger) throws IoxException {
         EhiLogger.getInstance().setTraceFilter(false);
         XtfReader reader = new XtfReader(xtffile);
         Settings settings = new Settings();
         
         Map<String,Class> newFunctions = new HashMap<String,Class>();
-        newFunctions.put("MINIFunction.MINI_Knoten_Leitungen", MINIKnotenLeitungenIoxPlugin.class);
+        newFunctions.put("MINIFunction.MINI_Knoten_Leitungen_wegfuehrend", MINIKnotenLeitungenWegfuehrendIoxPlugin.class);
         settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
 
         ch.interlis.iox_j.validator.Validator validator=null;
@@ -82,12 +82,14 @@ public class MINIKnotenLeitungenIoxPluginTest {
         } while (!(event instanceof EndTransferEvent));
 
     }
+
     
     @Test
-    public void mitKeinerLeitungVerbundenerKnoten() throws Exception {        
+    public void nichtAlsSolchesAttributiertesSonderbauwerk() throws Exception {        
         LogCollector logger = new LogCollector();
-        runValidation(new File(TEST_IN+"mit_keiner_leitung_verbundener_knoten.xtf"), logger);
+        runValidation(new File(TEST_IN+"nicht_als_solches_attributiertes_Sonderbauwerk.xtf"), logger);
         
         assertEquals(1, logger.getErrs().size());
     }
+
 }

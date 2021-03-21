@@ -4,6 +4,9 @@ CONTRACTED MODEL MINIFunction
     
    !! Liefert wohl die Leitungen zurück mit denen der Knoten verbunden ist. 
    FUNCTION MINI_Knoten_Leitungen (Knoten: OBJECT OF ANYCLASS): OBJECTS OF ANYCLASS;
+
+   !! Liefert wohl die Leitungen zurück bei denen der Knoten "von_KnotenRef" ist. 
+   FUNCTION MINI_Knoten_Leitungen_wegfuehrend (Knoten: OBJECT OF ANYCLASS): OBJECTS OF ANYCLASS;
     
     
 END MINIFunction.

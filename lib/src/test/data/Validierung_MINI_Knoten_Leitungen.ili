@@ -16,8 +16,8 @@ VERSION "2020-11-12"  =
     =
         ALL OF Knoten;
          
-         !!@ name = 2020
-         !!@ ilivalid.msg = "Mit keiner Leitung verbundener Knoten"
+         !!@ name = 2020;
+         !!@ ilivalid.msg = "Mit keiner Leitung verbundener Knoten";
          MANDATORY CONSTRAINT elementCount(MINI_Knoten_Leitungen(THIS)) > 0;
 
     END v_Knoten;

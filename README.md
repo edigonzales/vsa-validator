@@ -22,7 +22,7 @@ java -jar /Users/stefan/apps/ilivalidator-1.11.9/ilivalidator-1.11.9.jar --model
 | 1020 | Text.matches() | [x] |
 | 1021 | core ilivalidator | [x] |
 | 2010 | needs coding | [ ] |
-| 2020 | needs coding. Prüfung geometrisch oder "bloss" mittels Assoziation? | [ ] |
+| 2020 | needs coding. Prüfung geometrisch oder "bloss" mittels Assoziation? | [x] |
 | 2030 | needs coding | [ ] |
 | 2040 | needs coding | [ ] |
 | 2050 | needs coding. IGS_filter? | [ ] |
