@@ -83,9 +83,17 @@ public class MINIKnotenLeitungenWegfuehrendIoxPluginTest {
     }
   
     @Test
-    public void nichtAlsSolchesAttributiertesSonderbauwerk() throws Exception {        
+    public void wegfuehrendeLeitungen_Ok() throws Exception {        
         LogCollector logger = new LogCollector();
-        runValidation(new File(TEST_IN+"nicht_als_solches_attributiertes_Sonderbauwerk.xtf"), logger);
+        runValidation(new File(TEST_IN+"wegfuehrende_Leitungen_Ok.xtf"), logger);
+        
+        assertEquals(0, logger.getErrs().size());
+    }
+    
+    @Test
+    public void wegfuehrendeLeitungen_Fail() throws Exception {        
+        LogCollector logger = new LogCollector();
+        runValidation(new File(TEST_IN+"wegfuehrende_Leitungen_Fail.xtf"), logger);
         
         assertEquals(1, logger.getErrs().size());
     }

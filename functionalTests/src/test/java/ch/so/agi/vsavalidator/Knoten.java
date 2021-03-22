@@ -1,5 +1,6 @@
 package ch.so.agi.vsavalidator;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -46,5 +47,39 @@ public class Knoten {
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
         assertTrue(content.contains("Error: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid 34B23C95-8F24-4B3D-A4C3-5997B4A7FFE7: value <34B23C95-8F24-4B3D-A4C3-5997B4A7FFE7> is not a valid OID"));
+    }
+    
+    @Disabled
+    @Test 
+    public void Cid_2010(@TempDir Path tempDir) throws Exception {
+        
+    }
+    
+    @Test 
+    public void Cid_2020(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2020/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2020/config.toml");
+
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2020/2020.xtf", settings);
+
+        // TODO 'not yet implemented'
+    }
+    
+    @Test
+    public void Cid_2030(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2030/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2030/config.toml");
+
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2030/2030.xtf", settings);
+
+        // TODO...
     }
 }

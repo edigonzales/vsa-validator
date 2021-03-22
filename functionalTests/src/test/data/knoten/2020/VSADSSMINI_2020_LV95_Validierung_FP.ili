@@ -5,8 +5,9 @@ AT "http://www.geo.so.ch"
 VERSION "2020-11-12"  =
   
   IMPORTS VSADSSMINI_2020_LV95;
-  IMPORTS UNQUALIFIED INTERLIS;
+  IMPORTS Text;
   IMPORTS UNQUALIFIED MINIFunction;
+  IMPORTS UNQUALIFIED INTERLIS;
   
   VIEW TOPIC VSADSSMini_Validierung = 
   DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
@@ -15,9 +16,10 @@ VERSION "2020-11-12"  =
     	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Knoten;
     =
         ALL OF Knoten;
-         
-         !!@ name = Knoten_Leitungen_wegfuehrend_groesser_1;
-         MANDATORY CONSTRAINT elementCount(MINI_Knoten_Leitungen_wegfuehrend(THIS)) > 1;
+                
+        !!@ name = 2020
+        !!@ ilivalid.msg = "Mit keiner Leitung verbundener Knoten."                 
+        MANDATORY CONSTRAINT elementCount(MINI_Knoten_Leitungen(THIS)) > 0;
 
     END v_Knoten;
         

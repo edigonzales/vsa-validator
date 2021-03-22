@@ -1,0 +1,15 @@
+INTERLIS 2.3;
+CONTRACTED MODEL MINIFunction
+  AT "mailto:stefan.ziegler@bd.so.ch" VERSION "2021-03-15" =
+    
+   !! Liefert die Leitungen zurück mit denen der Knoten verbunden ist. 
+   FUNCTION MINI_Knoten_Leitungen (Knoten: OBJECT OF ANYCLASS): OBJECTS OF ANYCLASS;
+
+   !! Liefert die Leitungen zurück bei denen der Knoten "von_KnotenRef" ist. 
+   FUNCTION MINI_Knoten_Leitungen_wegfuehrend (Knoten: OBJECT OF ANYCLASS): OBJECTS OF ANYCLASS;
+
+   !! Liefert die Leitungen zurück bei denen der Knoten "nach_KnotenRef" ist. 
+   FUNCTION MINI_Knoten_Leitungen_zufuehrend (Knoten: OBJECT OF ANYCLASS): OBJECTS OF ANYCLASS;
+    
+    
+END MINIFunction.

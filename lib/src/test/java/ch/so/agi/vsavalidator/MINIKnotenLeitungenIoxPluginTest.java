@@ -84,9 +84,17 @@ public class MINIKnotenLeitungenIoxPluginTest {
     }
     
     @Test
-    public void mitKeinerLeitungVerbundenerKnoten() throws Exception {        
+    public void alleLeitungen_Ok() throws Exception {        
         LogCollector logger = new LogCollector();
-        runValidation(new File(TEST_IN+"mit_keiner_leitung_verbundener_knoten.xtf"), logger);
+        runValidation(new File(TEST_IN+"alle_Leitungen_Ok.xtf"), logger);
+        
+        assertEquals(0, logger.getErrs().size());
+    }
+    
+    @Test
+    public void alleLeitungen_Fail() throws Exception {        
+        LogCollector logger = new LogCollector();
+        runValidation(new File(TEST_IN+"alle_Leitungen_Fail.xtf"), logger);
         
         assertEquals(1, logger.getErrs().size());
     }
