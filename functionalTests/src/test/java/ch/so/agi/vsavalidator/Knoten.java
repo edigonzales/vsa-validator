@@ -63,10 +63,11 @@ public class Knoten {
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
         settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2020/");
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2020/config.toml");
-
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
         boolean valid = Validator.runValidation(TEST_IN+"knoten/2020/2020.xtf", settings);
 
-        // TODO 'not yet implemented'
+        // TODO...
     }
     
     @Test
@@ -77,6 +78,7 @@ public class Knoten {
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
         settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2030/");
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2030/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
 
         boolean valid = Validator.runValidation(TEST_IN+"knoten/2030/2030.xtf", settings);
 
