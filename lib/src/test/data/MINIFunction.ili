@@ -12,7 +12,7 @@ CONTRACTED MODEL MINIFunction
    FUNCTION MINI_Knoten_Leitungen_zufuehrend (Knoten: OBJECT OF ANYCLASS): OBJECTS OF ANYCLASS;
     
    !! Liefert wohl die Überläufe/Förderaggregate zurück mit denen der Knoten verbunden ist.
-   FUNCTION MINI_Knoten_Foerderaggregat_Ueberlauf (Knoten: OBJECT OF ANYCLASS): OBJECTS OF ANYCLASS;
+   FUNCTION MINI_Knoten_Ueberlauf_Foerderaggregate (Knoten: OBJECT OF ANYCLASS): OBJECTS OF ANYCLASS;
 
     
 END MINIFunction.

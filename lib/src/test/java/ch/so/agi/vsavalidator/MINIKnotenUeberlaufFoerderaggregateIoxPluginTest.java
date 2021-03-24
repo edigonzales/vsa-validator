@@ -66,7 +66,7 @@ public class MINIKnotenUeberlaufFoerderaggregateIoxPluginTest {
         Settings settings = new Settings();
         
         Map<String,Class> newFunctions = new HashMap<String,Class>();
-        newFunctions.put("MINIFunction.MINI_Knoten_Foerderaggregat_Ueberlauf", MINIKnotenUeberlaufFoerderaggregateIoxPlugin.class);
+        newFunctions.put("MINIFunction.MINI_Knoten_Ueberlauf_Foerderaggregate", MINIKnotenUeberlaufFoerderaggregateIoxPlugin.class);
         settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
 
         ch.interlis.iox_j.validator.Validator validator=null;

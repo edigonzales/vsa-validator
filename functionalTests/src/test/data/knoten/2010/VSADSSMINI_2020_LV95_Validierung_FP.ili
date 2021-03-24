@@ -1,0 +1,44 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_FP (de)
+AT "http://www.geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS Text;
+  IMPORTS UNQUALIFIED MINIFunction;
+  IMPORTS UNQUALIFIED INTERLIS;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+	VIEW v_Knoten
+    	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Knoten;
+    =
+        ALL OF Knoten;
+                
+        !!@ name = 2010
+        !!@ ilivalid.msg = "Knoten ohne Auslauf."                 
+         MANDATORY CONSTRAINT 
+            NOT (
+               Funktion != #Be_Entlueftung
+               AND Funktion != #Einleitstelle_gewaesserrelevant
+               AND Funktion != #Einleitstelle_nicht_gewaesserrelevant
+               AND Funktion != #Guellegrube
+               AND Funktion != #seitlicherZugang
+               AND Funktion != #Versickerungsanlage
+               AND Funktion != #abflussloseGrube  !! neu 18.4.2019 sb
+               AND Funktion != #Gelaendemulde  !! neu 18.4.2019 sb
+               AND Funktion != #Guellegrube  !! neu 18.4.2019 sb
+               AND Funktion != #Klaergrube  !! neu 18.4.2019 sb
+            )
+            OR (
+               elementCount(MINI_Knoten_Leitungen_wegfuehrend(THIS)) > 0
+               OR elementCount(MINI_Knoten_Ueberlauf_Foerderaggregate(THIS)) > 0
+            );
+
+    END v_Knoten;
+        
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_FP.

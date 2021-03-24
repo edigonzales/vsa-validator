@@ -49,10 +49,21 @@ public class Knoten {
         assertTrue(content.contains("Error: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid 34B23C95-8F24-4B3D-A4C3-5997B4A7FFE7: value <34B23C95-8F24-4B3D-A4C3-5997B4A7FFE7> is not a valid OID"));
     }
     
-    @Disabled
     @Test 
     public void Cid_2010(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2010/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2010/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
         
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2010/2010.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001005: Knoten ohne Auslauf"));
     }
     
     @Test 
@@ -66,8 +77,10 @@ public class Knoten {
         settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
         
         boolean valid = Validator.runValidation(TEST_IN+"knoten/2020/2020.xtf", settings);
+        assertTrue(valid);
 
-        // TODO...
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 45: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001003: Mit keiner Leitung verbundener Knoten"));
     }
     
     @Test
@@ -81,7 +94,9 @@ public class Knoten {
         settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
 
         boolean valid = Validator.runValidation(TEST_IN+"knoten/2030/2030.xtf", settings);
+        assertFalse(valid);
 
-        // TODO...
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 20: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001001: Nicht als solches attributiertes Sonderbauwerk"));
     }
 }
