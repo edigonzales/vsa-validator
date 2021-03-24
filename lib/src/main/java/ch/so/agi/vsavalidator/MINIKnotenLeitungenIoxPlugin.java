@@ -86,7 +86,7 @@ public class MINIKnotenLeitungenIoxPlugin implements InterlisFunction {
         IoxDataPool pipelinePool = (IoxDataPool) settings.getTransientObject(InterlisFunction.IOX_DATA_POOL);
 
         if (pipelinePool.getIntermediateValue(CACHE_NAME) == null) {
-            Set<IomObject> leitungenSet = Utils.createLeitungenCache(objectPool);
+            Set<IomObject> leitungenSet = Utils.createSimpleObjectCache(objectPool, "VSADSSMINI_2020_LV95.VSADSSMini.Leitung");
             pipelinePool.setIntermediateValue(CACHE_NAME, leitungenSet);
         }
     }
