@@ -65,9 +65,9 @@ public class MINIKnotenUeberlaufFoerderaggregateIoxPluginTest {
         XtfReader reader = new XtfReader(xtffile);
         Settings settings = new Settings();
         
-//        Map<String,Class> newFunctions = new HashMap<String,Class>();
-//        newFunctions.put("MINIFunction.MINI_Knoten_Leitungen", MINIKnotenLeitungenIoxPlugin.class);
-//        settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
+        Map<String,Class> newFunctions = new HashMap<String,Class>();
+        newFunctions.put("MINIFunction.MINI_Knoten_Foerderaggregat_Ueberlauf", MINIKnotenUeberlaufFoerderaggregateIoxPlugin.class);
+        settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
 
         ch.interlis.iox_j.validator.Validator validator=null;
         LogEventFactory errFactory = new LogEventFactory();
@@ -96,7 +96,6 @@ public class MINIKnotenUeberlaufFoerderaggregateIoxPluginTest {
         LogCollector logger = new LogCollector();
         runValidation(new File(TEST_IN+"Knoten_Ueberlauf_Foerderaggregat_Fail.xtf"), logger);
        
-        //TODO
-        //assertEquals(1, logger.getErrs().size());
+        assertEquals(1, logger.getErrs().size());
     }
 }

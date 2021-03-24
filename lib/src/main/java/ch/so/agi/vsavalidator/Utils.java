@@ -23,4 +23,19 @@ public class Utils {
         
         return leitungenSet;
     }
+    
+    public static Set<IomObject> createSimpleObjectCache(ObjectPool objectPool, String objectTag) {
+        //String OBJECT_TAG = "VSADSSMINI_2020_LV95.VSADSSMini.Ueberlauf_Foerderaggregat";
+        
+        Set<IomObject> objSet = new HashSet<IomObject>();
+        objectPool.getBasketIds().stream().map((basketId) -> (objectPool.getObjectsOfBasketId(basketId)).valueIterator()).forEach((Iterator objectIterator) -> {
+            while (objectIterator.hasNext()) {
+                IomObject iomObj = (IomObject) objectIterator.next();
+                if (iomObj != null && iomObj.getobjecttag().equals(objectTag)) {
+                    objSet.add(iomObj);
+                }
+            }
+        });
+        return objSet;
+    }
 }

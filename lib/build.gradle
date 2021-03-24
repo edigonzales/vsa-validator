@@ -8,7 +8,7 @@ repositories {
 }
 
 configurations {
-    jar.archiveName = "vsavalidator-functions-"+version+".jar"
+    jar.archiveName = "vsavalidator-functions.jar"
 }
 
 configurations.all {

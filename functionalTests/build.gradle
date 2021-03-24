@@ -17,6 +17,7 @@ configurations.all {
 }
 
 dependencies {
+    compile project(':lib')
     api 'ch.interlis:ilivalidator:1.11.10-SNAPSHOT'
     api 'ch.interlis:iox-ili:1.21.6+'
     api 'ch.interlis:ili2c-tool:5.2.0'
