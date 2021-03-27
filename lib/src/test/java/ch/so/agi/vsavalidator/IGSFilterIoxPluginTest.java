@@ -25,7 +25,7 @@ import ch.interlis.iox_j.logging.LogEventFactory;
 import ch.interlis.iox_j.validator.ValidationConfig;
 import ch.interlis.iox_j.validator.Validator;
 
-public class MINIKnotenLeitungenIoxPluginTest {
+public class IGSFilterIoxPluginTest {
     private TransferDescription td = null;
     private static final String TEST_IN = "src/test/data/xtf/";
 
@@ -49,24 +49,24 @@ public class MINIKnotenLeitungenIoxPluginTest {
             ili2cConfig.addFileEntry(fileEntry);
         }
         {
-            FileEntry fileEntry = new FileEntry("src/test/data/MINIFunction.ili", FileEntryKind.ILIMODELFILE);
+            FileEntry fileEntry = new FileEntry("src/test/data/IGSFunction.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
         }        
         {
-            FileEntry fileEntry = new FileEntry("src/test/data/Validierung_MINI_Knoten_Leitungen.ili", FileEntryKind.ILIMODELFILE);
+            FileEntry fileEntry = new FileEntry("src/test/data/Validierung_IGS_filter.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
         }
         td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);
         assertNotNull(td);
     }
-    
+
     private void runValidation(File xtffile, LogCollector logger) throws IoxException {
         EhiLogger.getInstance().setTraceFilter(false);
         XtfReader reader = new XtfReader(xtffile);
         Settings settings = new Settings();
         
         Map<String,Class> newFunctions = new HashMap<String,Class>();
-        newFunctions.put("MINIFunction.MINI_Knoten_Leitungen", MINIKnotenLeitungenIoxPlugin.class);
+        newFunctions.put("IGSFunction.IGS_filter", IGSFilterIoxPlugin.class);
         settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
 
         ch.interlis.iox_j.validator.Validator validator=null;
@@ -83,18 +83,11 @@ public class MINIKnotenLeitungenIoxPluginTest {
     }
     
     @Test
-    public void alleLeitungen_Ok() throws Exception {        
+    public void filter_startsWith() throws Exception {        
         LogCollector logger = new LogCollector();
-        runValidation(new File(TEST_IN+"alle_Leitungen_Ok.xtf"), logger);
-        
-        assertEquals(0, logger.getErrs().size());
-    }
-    
-    @Test
-    public void alleLeitungen_Fail() throws Exception {        
-        LogCollector logger = new LogCollector();
-        runValidation(new File(TEST_IN+"alle_Leitungen_Fail.xtf"), logger);
+        runValidation(new File(TEST_IN+"filter_startsWith.xtf"), logger);
         
         assertEquals(1, logger.getErrs().size());
     }
+
 }

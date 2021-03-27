@@ -2,9 +2,14 @@ plugins {
     id 'java-library'
 }
 
+sourceCompatibility = '8'
+targetCompatibility = '8'
+
 repositories {
-    mavenCentral()
     maven { url "http://jars.interlis.ch" }
+    //maven { url "https://repo.osgeo.org/repository/release" }
+    maven { url "http://maven.indexdata.com" }
+    mavenCentral()
 }
 
 configurations {
@@ -28,6 +33,10 @@ dependencies {
     api 'ch.interlis:ili2c-tool:5.2.0'
     api 'ch.interlis:ili2c-core:5.2.0'
     api 'ch.ehi:ehibasics:1.4.0'
+    
+    //implementation group: 'org.geotools', name: 'gt-cql', version: '25.0'
+    //implementation group: 'org.xbib', name: 'cql-common', version: '3.0.4'
+    //implementation group: 'org.z3950.zing', name: 'cql-java', version: '1.13'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'

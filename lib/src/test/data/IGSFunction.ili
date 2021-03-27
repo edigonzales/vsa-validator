@@ -1,0 +1,8 @@
+INTERLIS 2.3;
+CONTRACTED MODEL IGSFunction
+  AT "mailto:stefan.ziegler@bd.so.ch" VERSION "2021-03-15" =
+        
+   !! TODO
+   FUNCTION IGS_filter(objects: OBJECTS OF ANYCLASS; filter: TEXT): OBJECTS OF ANYCLASS;
+    
+END IGSFunction.
