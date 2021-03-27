@@ -33,7 +33,6 @@ public class IGSFilterIoxPlugin implements InterlisFunction {
 
     @Override
     public Value evaluate(String validationKind, String usageScope, IomObject mainObj, Value[] actualArguments) {
-
         // TODO: isUndefined scheint mir klar. Wann kommt es aber zu
         // skipEvaluation() und was macht man bei zwei Parametern?
         if (actualArguments[0].skipEvaluation()) {
@@ -48,15 +47,14 @@ public class IGSFilterIoxPlugin implements InterlisFunction {
         
         List<IomObject> iomObjects = (List<IomObject>) actualArguments[0].getComplexObjects();
         String filterString = actualArguments[1].getValue();
-        
+                
         List<IomObject> filteredObjects = new ArrayList<IomObject>();
 
         for (IomObject iomObj : iomObjects) {
             if(evaluateFilter(iomObj, filterString)) {
                 filteredObjects.add(iomObj);
             } 
-        }
-
+        } 
         return new Value(filteredObjects);
     }
 

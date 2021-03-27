@@ -1,6 +1,7 @@
 # vsa-validator
 
 ## Todo
+- IGS_filter Implementierung
 - clean repo
 - Im Sinne von Unit-Tests sollten die Tests im Code nicht die kombinierten Constraints prüfen, sondern nur die Funktion selber. Die VSA-Constraints werden in den Funktionstests geprüft. (MINI_Knoten_Leitungen und MINI_Knoten_Leitungen_wegfuehrend)
 - Subprojekt mit functional tests, d.h. sämtliche Tests auch solche, die keinen Code benötigen.
@@ -17,11 +18,11 @@
 | ----|-------------|--------|
 | 1020 | Text.matches() | [x] |
 | 1021 | core ilivalidator | [x] |
-| 2010 | needs coding | [ ] |
-| 2020 | needs coding. Prüfung geometrisch oder "bloss" mittels Assoziation? | [x] |
-| 2030 | needs coding | [ ] |
-| 2040 | needs coding | [ ] |
-| 2050 | needs coding. IGS_filter? | [ ] |
+| 2010 | needs coding | [x] |
+| 2020 | needs coding | [x] |
+| 2030 | needs coding | [x] |
+| 2040 | needs coding | [x] |
+| 2050 | needs coding | [x] |
 | 2110 | needs coding. Es gibt Math.min(). Funktionsweise noch zu verstehen. | [ ] |
 | ... | ... | [ ] |
 

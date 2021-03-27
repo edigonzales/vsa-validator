@@ -116,4 +116,21 @@ public class Knoten {
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
         assertTrue(content.contains("Warning: line 37: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001002: Kein Ueberlauf_Foerderaggregat erfasst"));        
     }
+    
+    @Test
+    public void Cid_2050(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2050/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2040/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2050/2050.xtf", settings);
+        assertFalse(valid);
+
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 32: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001002: Nicht-gewaesserrelevante Einleitstelle mit PAA-Einlauf"));
+    }
 }
