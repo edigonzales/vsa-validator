@@ -4,5 +4,8 @@ CONTRACTED MODEL IGSFunction
         
    !! TODO
    FUNCTION IGS_filter(objects: OBJECTS OF ANYCLASS; filter: TEXT): OBJECTS OF ANYCLASS;
+   
+   !! TODO
+   FUNCTION IGS_min(objects: OBJECTS OF ANYCLASS; attribute: TEXT): NUMERIC;
     
 END IGSFunction.
