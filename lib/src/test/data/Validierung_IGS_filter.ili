@@ -17,12 +17,8 @@ VERSION "2020-11-12"  =
         ALL OF Knoten;
          
          !!@ name = PAA_Knoten;
-         !!@ ilivalid.msg = "Kein PAA-Knoten";
-         /* TODO: Vielleicht syntaktisch nicht ganz korrekt, da IGS_filter OBJECTS OF ANYCLASS
-         * erwartet. In der IoxPlugin-Funktion kommt aber immer eine Liste an (?).
-         * In den Funktionstests wurde es korrekt angewendet.
-         */
-         MANDATORY CONSTRAINT elementCount(IGS_filter(THIS, "FunktionHierarchisch=PA*")) > 0;
+         !!@ ilivalid.msg = "Keine PAA-Knoten gefunden.";
+         SET CONSTRAINT elementCount(IGS_filter(ALL, "FunktionHierarchisch=PA*")) > 1;
 
     END v_Knoten;
         
