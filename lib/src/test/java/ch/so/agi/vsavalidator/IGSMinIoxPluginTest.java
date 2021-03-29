@@ -33,10 +33,6 @@ public class IGSMinIoxPluginTest {
     public void setUp() throws Exception {
         Configuration ili2cConfig = new Configuration();
         {
-            FileEntry fileEntry = new FileEntry("src/test/data/Math.ili", FileEntryKind.ILIMODELFILE);
-            ili2cConfig.addFileEntry(fileEntry);
-        }
-        {
             FileEntry fileEntry = new FileEntry("src/test/data/Units-20120220.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
         }
