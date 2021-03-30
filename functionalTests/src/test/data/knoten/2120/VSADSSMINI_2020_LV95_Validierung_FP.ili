@@ -1,0 +1,37 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_FP (de)
+AT "http://www.geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS UNQUALIFIED INTERLIS;
+  IMPORTS UNQUALIFIED IGSFunction;
+  IMPORTS UNQUALIFIED MINIFunction;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+	VIEW v_Knoten
+    	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Knoten;
+    =
+        ALL OF Knoten;
+         
+         !!@ name = 2120;
+         !!@ ilivalid.msg = "Auslauf höher als Zulauf";
+         MANDATORY CONSTRAINT
+            NOT (
+               Funktion != #Pumpwerk
+               AND Funktion != #Schlammsammler
+               AND Funktion != #Duekerkammer  !! neu 18.4.2019 sb
+            )
+            OR (
+               IGS_min(MINI_Knoten_Leitungen_zufuehrend(THIS),"Kote_nach") >=
+               IGS_min(MINI_Knoten_Leitungen_wegfuehrend(THIS),"Kote_von")
+            );
+
+    END v_Knoten;
+        
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_FP.
