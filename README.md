@@ -1,10 +1,9 @@
 # vsa-validator
 
 ## Todo
-- IGS_filter Implementierung
+- Trennen der Funktionstest: Ok und Fail je Test. Sonst testet man nicht wirklich alles.
+- IGS_filter Implementierung (in "Gut")
 - clean repo
-- Im Sinne von Unit-Tests sollten die Tests im Code nicht die kombinierten Constraints prüfen, sondern nur die Funktion selber. Die VSA-Constraints werden in den Funktionstests geprüft. (MINI_Knoten_Leitungen und MINI_Knoten_Leitungen_wegfuehrend)
-- Subprojekt mit functional tests, d.h. sämtliche Tests auch solche, die keinen Code benötigen.
 - Versionen der Libs abstimmen. Am Ende des Tages muss es mit ilivalidator funktionieren.
 - Test der XTF mit VSA-Checker
 

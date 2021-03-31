@@ -167,4 +167,76 @@ public class Knoten {
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
         assertTrue(content.contains("Warning: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001004: Auslauf höher als Zulauf"));
     }
+    
+    @Test
+    public void Cid_2130_Fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2130_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2130_fehler/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2130_fehler/2130.xtf", settings);
+        assertTrue(valid);
+
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 32: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001002: Verschmutztes Abwasser in Einleitstelle"));
+    }
+    
+    @Test
+    public void Cid_2130(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2130/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2130/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2130/2130.xtf", settings);
+        assertTrue(valid);
+
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_2131_Fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2131_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2131_fehler/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2131_fehler/2131.xtf", settings);
+        assertTrue(valid);
+
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 32: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001002: Verschmutztes Abwasser in Einleitstelle"));
+    }
+    
+    @Test
+    public void Cid_2131(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2131/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2131/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2131/2131.xtf", settings);
+        assertTrue(valid);
+
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+
+
 }
