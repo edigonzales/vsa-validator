@@ -6,7 +6,7 @@
 - clean repo
 - Versionen der Libs abstimmen. Am Ende des Tages muss es mit ilivalidator funktionieren.
 - Test der XTF mit VSA-Checker
-- IGS_getYear: Warum dummy:TEXT?
+- Unschön: Math.add() funktioniert nicht mit IGS_getYear(). Wahrscheinlich wegen Rückgabewert NUMERIC von getYear und führt zu "inkompatiblen Values" Fehlern. Eine eigens geschriebene IGS_add()-Funktion, funktioniert auch nur mit Zusatzaufwand, indem man nicht getValue() verwendet, sondern getNumeric() (resp. if/else...). -> Tickt noch nicht erstellt.
 
 ## Requirements
 - iox-ili >= 1.21.6-SNAPSHOT (see https://github.com/claeis/iox-ili/commit/7613518d82d7f1ac40e4b52d84150212c313e137)

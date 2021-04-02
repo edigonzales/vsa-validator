@@ -277,5 +277,181 @@ public class Knoten {
         assertFalse(content.contains("Warning"));
         assertFalse(content.contains("Error"));
     }
+    
+    @Disabled("https://github.com/claeis/ilivalidator/issues/300")
+    @Test
+    public void Cid_2150_Fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2150_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2150_fehler/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2150_fehler/2150.xtf", settings);
+        assertFalse(valid);
 
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+//        assertTrue(content.contains("Warning: line 32: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001002: Verschmutztes Abwasser in Einleitstelle"));
+    }
+
+    @Disabled("https://github.com/claeis/ilivalidator/issues/300")
+    @Test
+    public void Cid_2150(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2150/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2150/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2150/2150.xtf", settings);
+        assertTrue(valid);
+
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_2160_Fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2160_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2160_fehler/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2160_fehler/2160.xtf", settings);
+        assertFalse(valid);
+
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 23: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001001: SAA-Knoten an PAA-Leitung"));
+    }
+    
+    @Test
+    public void Cid_2160(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2160/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2160/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2160/2160.xtf", settings);
+        assertTrue(valid);
+
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+
+    @Test
+    public void Cid_9101_fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/9101_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/9101_fehler/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/9101_fehler/9101.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001001: Baujahr ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9101(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/9101/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/9101/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/9101/9101.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_9102_fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/9102_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/9102_fehler/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/9102_fehler/9102.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001001: Deckelkote ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9102(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/9102/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/9102/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/9102/9102.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_9103_fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/9103_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/9103_fehler/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/9103_fehler/9103.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001001: Sohlenkote ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9103(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/9103/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/9103/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/9103/9103.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
 }

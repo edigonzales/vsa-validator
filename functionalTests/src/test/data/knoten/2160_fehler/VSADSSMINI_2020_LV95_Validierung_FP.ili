@@ -1,0 +1,45 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_FP (de)
+AT "http://www.geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS UNQUALIFIED INTERLIS;
+  IMPORTS UNQUALIFIED IGSFunction;
+  IMPORTS UNQUALIFIED MINIFunction;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+	VIEW v_Knoten
+    	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Knoten;
+    =
+        ALL OF Knoten;
+         
+         !!@ name = 2160;
+         !!@ ilivalid.msg = "SAA-Knoten an PAA-Leitung";
+         MANDATORY CONSTRAINT
+            NOT (
+               FunktionHierarchisch == #SAA
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_zufuehrend(THIS),
+                     "FunktionHierarchisch=PAA.*"
+                  )
+               ) == 0
+               AND elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(THIS),
+                     "FunktionHierarchisch=PAA.*"
+                  )
+               ) == 0
+            );
+
+    END v_Knoten;
+        
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_FP.

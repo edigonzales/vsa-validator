@@ -10,5 +10,8 @@ CONTRACTED MODEL IGSFunction
    
    !! TODO
    FUNCTION IGS_getYear(dummy: TEXT): NUMERIC;
+   
+   !! TODO
+   FUNCTION IGS_add(value1: NUMERIC; value2: NUMERIC): NUMERIC;
     
 END IGSFunction.

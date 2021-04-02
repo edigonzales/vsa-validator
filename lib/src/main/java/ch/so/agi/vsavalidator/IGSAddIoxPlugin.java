@@ -1,8 +1,5 @@
 package ch.so.agi.vsavalidator;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import ch.ehi.basics.settings.Settings;
 import ch.interlis.ili2c.metamodel.TransferDescription;
 import ch.interlis.iom.IomObject;
@@ -12,7 +9,7 @@ import ch.interlis.iox_j.validator.InterlisFunction;
 import ch.interlis.iox_j.validator.ObjectPool;
 import ch.interlis.iox_j.validator.Value;
 
-public class IGSGetYearIoxPlugin implements InterlisFunction {
+public class IGSAddIoxPlugin implements InterlisFunction {
     private LogEventFactory logger = null;
 
     @Override
@@ -20,19 +17,33 @@ public class IGSGetYearIoxPlugin implements InterlisFunction {
         if (actualArguments[0].skipEvaluation()) {
             return actualArguments[0];
         }
-//        if (actualArguments[0].isUndefined()) {
-//            return Value.createSkipEvaluation();
-//        }
-
-        Date date = new Date(); 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return new Value(calendar.get(Calendar.YEAR));
+        if (actualArguments[0].isUndefined()) {
+            return Value.createSkipEvaluation();
+        }
+        if (actualArguments[1].isUndefined()) {
+            return Value.createSkipEvaluation();
+        }
+        
+        Double value1;
+        Double value2;
+        if (actualArguments[0].getValue() != null) {
+            value1 = Double.parseDouble(actualArguments[0].getValue());
+        } else {
+            value1 = Double.valueOf(actualArguments[0].getNumeric());
+        }
+        
+        if (actualArguments[1].getValue() != null) {
+            value2 = Double.parseDouble(actualArguments[1].getValue());
+        } else {
+            value2 = Double.valueOf(actualArguments[1].getNumeric());
+        }
+        
+        return new Value(value1 + value2);
     }
 
     @Override
     public String getQualifiedIliName() {
-        return "IGSFunction.IGS_getYear";
+        return "IGSFunction.IGS_add";
     }
 
     @Override
