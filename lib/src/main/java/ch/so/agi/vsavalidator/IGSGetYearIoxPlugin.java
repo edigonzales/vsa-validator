@@ -27,6 +27,7 @@ public class IGSGetYearIoxPlugin implements InterlisFunction {
         Date date = new Date(); 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+        System.out.println(calendar.get(Calendar.YEAR));
         return new Value(calendar.get(Calendar.YEAR));
     }
 

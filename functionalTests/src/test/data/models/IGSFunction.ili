@@ -8,4 +8,7 @@ CONTRACTED MODEL IGSFunction
    !! TODO
    FUNCTION IGS_min(objects: OBJECTS OF ANYCLASS; attribute: TEXT): NUMERIC;
 
+   !! TODO
+   FUNCTION IGS_getYear(dummy: TEXT): NUMERIC;
+
 END IGSFunction.

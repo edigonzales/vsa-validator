@@ -12,6 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.interlis2.validator.Validator;
+
+import ch.ehi.basics.logging.EhiLogger;
 import ch.ehi.basics.settings.Settings;
 
 public class Knoten {
@@ -238,5 +240,42 @@ public class Knoten {
         assertFalse(content.contains("Error"));
     }
 
+    @Disabled("https://github.com/claeis/ilivalidator/issues/300")
+    @Test
+    public void Cid_2140_Fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2140_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2140_fehler/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        //EhiLogger.getInstance().setTraceFilter(false);
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2140_fehler/2140.xtf", settings);
+        assertFalse(valid);
+
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+//        assertTrue(content.contains("Warning: line 32: VSADSSMINI_2020_LV95.VSADSSMini.Knoten: tid deg5mQXX20001002: Verschmutztes Abwasser in Einleitstelle"));
+    }
+    
+    @Disabled("https://github.com/claeis/ilivalidator/issues/300")
+    @Test
+    public void Cid_2140(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"knoten/2140/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"knoten/2140/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"knoten/2140/2140.xtf", settings);
+        assertFalse(valid);
+
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
 
 }
