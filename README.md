@@ -6,6 +6,7 @@
 - clean repo
 - Versionen der Libs abstimmen. Am Ende des Tages muss es mit ilivalidator funktionieren.
 - Test der XTF mit VSA-Checker
+- IGS_getYear: Warum dummy:TEXT?
 
 ## Requirements
 - iox-ili >= 1.21.6-SNAPSHOT (see https://github.com/claeis/iox-ili/commit/7613518d82d7f1ac40e4b52d84150212c313e137)
