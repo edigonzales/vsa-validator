@@ -10,16 +10,15 @@ VERSION "2020-11-12"  =
   
   VIEW TOPIC VSADSSMini_Validierung = 
   DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
-  
-	VIEW v_Knoten
-    	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Knoten;
+      
+    VIEW v_Leitung
+        PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Leitung;
     =
-        ALL OF Knoten;
-         
-         !!@ name = Knoten_Leitungen_zufuehrend_groesser_1;
-         MANDATORY CONSTRAINT elementCount(MINI_Knoten_Leitungen_zufuehrend(THIS)) > 1;
+        ALL OF Leitung;
+                
+        MANDATORY CONSTRAINT elementCount(MINI_Knoten_Leitungen_zufuehrend(Knoten_vonRef)) > 1;
 
-    END v_Knoten;
+    END v_Leitung;
         
   END VSADSSMini_Validierung;
 

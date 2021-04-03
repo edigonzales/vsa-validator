@@ -32,14 +32,21 @@ public class MINIKnotenLeitungenZufuehrendIoxPlugin implements InterlisFunction 
         if (actualArguments[0].isUndefined()) {
             return Value.createSkipEvaluation();
         }
-
+                
         IoxDataPool pipelinePool = (IoxDataPool) settings.getTransientObject(InterlisFunction.IOX_DATA_POOL);
         Set<IomObject> cache = (HashSet<IomObject>) pipelinePool.getIntermediateValue(CACHE_NAME);
 
-        List<IomObject> iomObjects = (List<IomObject>) actualArguments[0].getComplexObjects();
+        String knotenObjId;
+        if (actualArguments[0].getOid() != null) {
+            knotenObjId = actualArguments[0].getOid();
+        } else {
+            List<IomObject> iomObjects = (List<IomObject>) actualArguments[0].getComplexObjects();
 
-        IomObject knotenIomObj = iomObjects.get(0);
-        String knotenObjId = knotenIomObj.getobjectoid();
+            IomObject knotenIomObj = iomObjects.get(0);
+            knotenObjId = knotenIomObj.getobjectoid();
+        }
+        
+        if (knotenObjId == null) return Value.createUndefined();
         
         List<IomObject> leitungenObjects = cache
         .stream()
@@ -53,7 +60,7 @@ public class MINIKnotenLeitungenZufuehrendIoxPlugin implements InterlisFunction 
             return false;
             
         }).collect(Collectors.toList());
-
+        
         return new Value(leitungenObjects);
     }
 

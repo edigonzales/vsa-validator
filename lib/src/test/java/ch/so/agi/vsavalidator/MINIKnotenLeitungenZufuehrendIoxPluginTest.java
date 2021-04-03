@@ -27,11 +27,12 @@ import ch.interlis.iox_j.validator.Validator;
 
 public class MINIKnotenLeitungenZufuehrendIoxPluginTest {
     private TransferDescription td = null;
-    private static final String TEST_IN = "src/test/data/xtf/";
+    private Configuration ili2cConfig = null;
+    private static final String TEST_IN = "src/test/data/MINI_Knoten_Leitungen_zufuehrend/";
 
     @BeforeEach
     public void setUp() throws Exception {
-        Configuration ili2cConfig = new Configuration();
+        ili2cConfig = new Configuration();
         {
             FileEntry fileEntry = new FileEntry("src/test/data/Units-20120220.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
@@ -52,12 +53,6 @@ public class MINIKnotenLeitungenZufuehrendIoxPluginTest {
             FileEntry fileEntry = new FileEntry("src/test/data/MINIFunction.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
         }        
-        {
-            FileEntry fileEntry = new FileEntry("src/test/data/Validierung_MINI_Knoten_Leitungen_zufuehrend.ili", FileEntryKind.ILIMODELFILE);
-            ili2cConfig.addFileEntry(fileEntry);
-        }
-        td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);
-        assertNotNull(td);
     }
 
     private void runValidation(File xtffile, LogCollector logger) throws IoxException {
@@ -82,19 +77,75 @@ public class MINIKnotenLeitungenZufuehrendIoxPluginTest {
         } while (!(event instanceof EndTransferEvent));
     }
 
+    /*
+     * Constraint beim Knoten. Funktion sammelt alle Leitungen, die bei diesem Knoten zuführend sind.
+     * Es muss mehr als eine Leitung zuführend sein, was der Fall ist.
+     */
     @Test
-    public void zufuehrendeLeitungen_Ok() throws Exception {
+    public void Knoten_zufuehrendeLeitungen_Ok() throws Exception {
+        FileEntry fileEntry = new FileEntry(TEST_IN+"Validierung_Knoten_MINI_Knoten_Leitungen_zufuehrend.ili", FileEntryKind.ILIMODELFILE);
+        ili2cConfig.addFileEntry(fileEntry);
+        td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);
+        assertNotNull(td);
+
         LogCollector logger = new LogCollector();
-        runValidation(new File(TEST_IN+"zufuehrende_Leitungen_Ok.xtf"), logger);
+        runValidation(new File(TEST_IN+"Knoten_zufuehrende_Leitungen_Ok.xtf"), logger);
         
         assertEquals(0, logger.getErrs().size());
     }
     
+    /*
+     * Constraint beim Knoten. Funktion sammelt alle Leitungen, die bei diesem Knoten zuführend sind.
+     * Es muss mehr als eine Leitung zuführend sein, was nicht der Fall ist.
+     * Der Constraint ist nicht erfüllt und es wird ein Fehler geloggt.
+     */
     @Test
-    public void zufuehrendeLeitungen_Fail() throws Exception {
+    public void Knoten_zufuehrendeLeitungen_Fail() throws Exception {
+        FileEntry fileEntry = new FileEntry(TEST_IN+"Validierung_Knoten_MINI_Knoten_Leitungen_zufuehrend.ili", FileEntryKind.ILIMODELFILE);
+        ili2cConfig.addFileEntry(fileEntry);
+        td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);
+        assertNotNull(td);
+
         LogCollector logger = new LogCollector();
-        runValidation(new File(TEST_IN+"zufuehrende_Leitungen_Fail.xtf"), logger);
+        runValidation(new File(TEST_IN+"Knoten_zufuehrende_Leitungen_Fail.xtf"), logger);
         
         assertEquals(1, logger.getErrs().size());
     }
+
+    /*
+     * Constraint bei der Leitung. Die Funktion sammelt alle Leitungen, die bei dem Knoten zuführend sind, dessen TID in 
+     * der Funktion als Parameter übermittelt werden.
+     * Der Constraint ist erfüllt.
+     */
+    @Test
+    public void Leitung_zufuehrendeLeitungen_Ok() throws Exception {
+        FileEntry fileEntry = new FileEntry(TEST_IN+"Validierung_Leitung_MINI_Knoten_Leitungen_zufuehrend.ili", FileEntryKind.ILIMODELFILE);
+        ili2cConfig.addFileEntry(fileEntry);
+        td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);
+        assertNotNull(td);
+
+        LogCollector logger = new LogCollector();
+        runValidation(new File(TEST_IN+"Leitung_zufuehrende_Leitungen_Ok.xtf"), logger);
+        
+        assertEquals(0, logger.getErrs().size());
+    }
+    
+    /*
+     * Constraint bei der Leitung. Die Funktion sammelt alle Leitungen, die bei dem Knoten zuführend sind, dessen TID in 
+     * der Funktion als Parameter übermittelt werden.
+     * Der Constraint ist erfüllt.
+     */
+    @Test
+    public void Leitung_zufuehrendeLeitungen_Fail() throws Exception {
+        FileEntry fileEntry = new FileEntry(TEST_IN+"Validierung_Leitung_MINI_Knoten_Leitungen_zufuehrend.ili", FileEntryKind.ILIMODELFILE);
+        ili2cConfig.addFileEntry(fileEntry);
+        td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);
+        assertNotNull(td);
+
+        LogCollector logger = new LogCollector();
+        runValidation(new File(TEST_IN+"Leitung_zufuehrende_Leitungen_Fail.xtf"), logger);
+        
+        assertEquals(1, logger.getErrs().size());
+    }
+    
 }
