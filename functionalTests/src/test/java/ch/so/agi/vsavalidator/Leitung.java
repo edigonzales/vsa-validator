@@ -179,4 +179,155 @@ public class Leitung {
         assertFalse(content.contains("Warning"));
         assertFalse(content.contains("Error"));
     }
+    
+    @Test
+    public void Cid_3040_fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3040_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3040_fehler/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3040_fehler/3040.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 61: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002002: PAA-Leitung oberhalb von SAA-Leitung"));
+    }
+    
+    @Test
+    public void Cid_3040(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3040/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3040/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3040/3040.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    } 
+    
+    @Test
+    public void Cid_3050a_fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050a_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050a_fehler/config.toml");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050a_fehler/3050.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Knoten_nach und Leitung_nach erfasst"));
+    }
+    
+    @Test
+    public void Cid_3050a(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050a/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050a/config.toml");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050a/3050.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_3050b_fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050b_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050b_fehler/config.toml");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050b_fehler/3050.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Knoten_nach und Leitung_nach erfasst"));
+    }
+    
+    @Test
+    public void Cid_3050b(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050b/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050b/config.toml");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050b/3050.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_3070_fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3070_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3070_fehler/config.toml");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3070_fehler/3070.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 31: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Start- und Endknoten identisch"));
+    }
+    
+    @Test
+    public void Cid_3070(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3070/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3070/config.toml");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3070/3070.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_3080_fehler(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3080_fehler/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3080_fehler/config.toml");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3080_fehler/3080.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002002: Parallelleitung vorhanden"));
+    }
+
 }

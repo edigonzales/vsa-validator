@@ -25,7 +25,7 @@ public class MINIKnotenLeitungenZufuehrendIoxPlugin implements InterlisFunction 
     private String CACHE_NAME = "ch.so.agi.vsavalidator.Leitungen";
 
     @Override
-    public Value evaluate(String validationKind, String usageScope, IomObject mainObj, Value[] actualArguments) {
+    public Value evaluate(String validationKind, String usageScope, IomObject mainObj, Value[] actualArguments) {        
         if (actualArguments[0].skipEvaluation()) {
             return actualArguments[0];
         }
