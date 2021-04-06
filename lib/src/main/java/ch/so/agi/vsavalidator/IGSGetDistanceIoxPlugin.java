@@ -27,7 +27,7 @@ public class IGSGetDistanceIoxPlugin implements InterlisFunction {
         System.out.println("---------------");
         System.out.println(actualArguments[0].getComplexObjects());
         
-        // IGS_getFirstPoint: Vergleichen mit Knote_nachRef.
+        // IGS_getFirstPoint: Vergleichen mit Knote_nachRef z.B.
         
         
 //        Double value1;
