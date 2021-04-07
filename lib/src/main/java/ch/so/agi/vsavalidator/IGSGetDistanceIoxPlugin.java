@@ -24,28 +24,27 @@ public class IGSGetDistanceIoxPlugin implements InterlisFunction {
             return Value.createSkipEvaluation();
         }
         
-        System.out.println("---------------");
-        System.out.println(actualArguments[0].getComplexObjects());
+        IomObject startObj = (IomObject) actualArguments[0].getComplexObjects().toArray()[0];
+        IomObject endObj = (IomObject) actualArguments[1].getComplexObjects().toArray()[0];
+                
+        Double x1 = Double.parseDouble(startObj.getattrvalue("C1"));
+        Double y1 = Double.parseDouble(startObj.getattrvalue("C2"));
+        double z1 = 0;
+        if (startObj.getattrvalue("C3") != null) {
+            z1 = Double.parseDouble(startObj.getattrvalue("C3"));
+        }
         
+        Double x2 = Double.parseDouble(endObj.getattrvalue("C1"));
+        Double y2 = Double.parseDouble(endObj.getattrvalue("C2"));
+        double z2 = 0;
+        if (endObj.getattrvalue("C3") != null) {
+            z2 = Double.parseDouble(endObj.getattrvalue("C3"));
+        }
+
+        double distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2));
+        return new Value(distance);
+
         // IGS_getFirstPoint: Vergleichen mit Knote_nachRef z.B.
-        
-        
-//        Double value1;
-//        Double value2;
-//        if (actualArguments[0].getValue() != null) {
-//            value1 = Double.parseDouble(actualArguments[0].getValue());
-//        } else {
-//            value1 = Double.valueOf(actualArguments[0].getNumeric());
-//        }
-//        
-//        if (actualArguments[1].getValue() != null) {
-//            value2 = Double.parseDouble(actualArguments[1].getValue());
-//        } else {
-//            value2 = Double.valueOf(actualArguments[1].getNumeric());
-//        }
-//        
-//        return new Value(value1 + value2);
-        return Value.createSkipEvaluation();
     }
 
     @Override

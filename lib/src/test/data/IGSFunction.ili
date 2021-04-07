@@ -18,6 +18,6 @@ CONTRACTED MODEL IGSFunction
    FUNCTION IGS_add(value1: NUMERIC; value2: NUMERIC): NUMERIC;
     
    !! TODO
-   FUNCTION IGS_getDistance(coord1: COORD3; coord2: OBJECT OF ANYCLASS): NUMERIC;
+   FUNCTION IGS_getDistance(coord1: COORD3; coord2: COORD3): NUMERIC;
         
 END IGSFunction.

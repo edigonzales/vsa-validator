@@ -83,10 +83,18 @@ public class IGSGetDistanceIoxPluginTest {
     }
 
     @Test
-    public void getDistance_Ok() throws Exception {
+    public void getDistance2d_Ok() throws Exception {
         LogCollector logger = new LogCollector();
-        runValidation(new File(TEST_IN+"getDistance_Ok.xtf"), logger);
+        runValidation(new File(TEST_IN+"getDistance2d_Ok.xtf"), logger);
                 
-//        assertEquals(1, logger.getErrs().size());   
+        assertEquals(0, logger.getErrs().size());   
+    }
+    
+    @Test
+    public void getDistance2d_Fail() throws Exception {
+        LogCollector logger = new LogCollector();
+        runValidation(new File(TEST_IN+"getDistance2d_Fail.xtf"), logger);
+                
+        assertEquals(1, logger.getErrs().size());   
     }
 }
