@@ -19,5 +19,8 @@ CONTRACTED MODEL IGSFunction
     
    !! TODO
    FUNCTION IGS_getDistance(coord1: COORD3; coord2: COORD3): NUMERIC;
+
+   !! TODO
+   FUNCTION IGS_getFirstPoint(l: POLYLINE): COORD3;
         
 END IGSFunction.
