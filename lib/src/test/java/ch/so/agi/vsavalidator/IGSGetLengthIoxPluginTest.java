@@ -65,9 +65,9 @@ public class IGSGetLengthIoxPluginTest {
         XtfReader reader = new XtfReader(xtffile);
         Settings settings = new Settings();
         
-//        Map<String,Class> newFunctions = new HashMap<String,Class>();
-//        newFunctions.put("IGSFunction.IGS_getLength", IGSGetLengthIoxPlugin.class);
-//        settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
+        Map<String,Class> newFunctions = new HashMap<String,Class>();
+        newFunctions.put("IGSFunction.IGS_getLength", IGSGetLengthIoxPlugin.class);
+        settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
 
         ch.interlis.iox_j.validator.Validator validator=null;
         LogEventFactory errFactory = new LogEventFactory();
@@ -87,7 +87,7 @@ public class IGSGetLengthIoxPluginTest {
     @Test
     public void getLength2d_Ok() throws Exception {
         LogCollector logger = new LogCollector();
-//        runValidation(new File(TEST_IN+"getLength2d_Ok.xtf"), logger);
+        runValidation(new File(TEST_IN+"getLength2d_Ok.xtf"), logger);
                 
         assertEquals(0, logger.getErrs().size());   
     }
