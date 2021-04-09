@@ -22,6 +22,9 @@ CONTRACTED MODEL IGSFunction
 
    !! TODO
    FUNCTION IGS_getFirstPoint(l: POLYLINE): COORD3;
+
+   !! TODO
+   FUNCTION IGS_getLastPoint(l: POLYLINE): COORD3;
         
    !! TODO
    FUNCTION IGS_getLength(objects: OBJECTS OF ANYCLASS; attributePath: TEXT): NUMERIC;

@@ -33,7 +33,6 @@ import ch.interlis.ili2c.metamodel.Type;
 import ch.interlis.ili2c.metamodel.TypeAlias;
 import ch.interlis.ili2c.metamodel.Viewable;
 import ch.interlis.ili2c.metamodel.ViewableTransferElement;
-import ch.interlis.ili2c.parser.Ili23Parser;
 import ch.interlis.iom.IomObject;
 import ch.interlis.iom_j.Iom_jObject;
 import ch.interlis.iox.IoxValidationConfig;
@@ -43,7 +42,6 @@ import ch.interlis.iox_j.logging.LogEventFactory;
 import ch.interlis.iox_j.validator.InterlisFunction;
 import ch.interlis.iox_j.validator.ObjectPool;
 import ch.interlis.iox_j.validator.Value;
-import ch.interlis.iox_j.validator.Validator;
 
 public class IGSGetLengthIoxPlugin implements InterlisFunction {
     private LogEventFactory logger = null;
