@@ -9,7 +9,7 @@ import ch.interlis.iox_j.validator.InterlisFunction;
 import ch.interlis.iox_j.validator.ObjectPool;
 import ch.interlis.iox_j.validator.Value;
 
-public class IGSAddIoxPlugin implements InterlisFunction {
+public class IGSSqrtIoxPlugin implements InterlisFunction {
     private LogEventFactory logger = null;
 
     @Override
@@ -17,36 +17,23 @@ public class IGSAddIoxPlugin implements InterlisFunction {
         if (actualArguments[0].skipEvaluation()) {
             return actualArguments[0];
         }
-        if (actualArguments[1].skipEvaluation()) {
-            return actualArguments[1];
-        }
         if (actualArguments[0].isUndefined()) {
             return Value.createSkipEvaluation();
         }
-        if (actualArguments[1].isUndefined()) {
-            return Value.createSkipEvaluation();
-        }
         
-        Double value1;
-        Double value2;
+        Double value;
         if (actualArguments[0].getValue() != null) {
-            value1 = Double.parseDouble(actualArguments[0].getValue());
+            value = Double.parseDouble(actualArguments[0].getValue());
         } else {
-            value1 = Double.valueOf(actualArguments[0].getNumeric());
+            value = Double.valueOf(actualArguments[0].getNumeric());
         }
         
-        if (actualArguments[1].getValue() != null) {
-            value2 = Double.parseDouble(actualArguments[1].getValue());
-        } else {
-            value2 = Double.valueOf(actualArguments[1].getNumeric());
-        }
-        
-        return new Value(value1 + value2);
+        return new Value(Math.sqrt(value));
     }
 
     @Override
     public String getQualifiedIliName() {
-        return "IGSFunction.IGS_add";
+        return "IGSFunction.IGS_sqrt";
     }
 
     @Override

@@ -12,7 +12,11 @@
 - In ilivalidator gibt es keine "Info"-Kategorie. Was tun? Warning?
 - skipEvaluation auch für weitere Argumente (Was ist das überhaupt? -> nachgefragt per E-Mail)
 - Klären (siehe E-Mail-Diskussion): Welche Typen haben die Argumente, z.B. POLYLINE vs OBJECTS OF ANYCLASS inkl. attrPath. Was liefert IoxPlugin in beiden Fällen? Wie ist der Umgang in beiden Varianten? Gleich? Komplett unterschiedlich?
-- 
+- Tests:
+  - sub
+  - pow
+  - abs
+  - sqrt
 
 ## Requirements
 - iox-ili >= 1.21.6-SNAPSHOT (see https://github.com/claeis/iox-ili/commit/7613518d82d7f1ac40e4b52d84150212c313e137)
@@ -21,6 +25,19 @@
 ## VSADSSMINI_2020_LV95_CHECK_FP
 
 - Knoten: Zwei Funktionstests funktionieren noch nicht. Siehe https://github.com/claeis/ilivalidator/issues/300
+
+
+            Math.abs(
+               Math.sub(
+                  LaengeEffektiv,
+                  Math.sqrt(
+                     Math.add(
+                        Math.pow(IGS_getLength(THIS, "Verlauf"),2),
+                        Math.abs(Math.pow(Math.sub(Kote_nach,Kote_von),2))
+                     )
+                  )
+               )
+            ) <= 0.1;
 
 
 

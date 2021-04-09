@@ -2,16 +2,43 @@ INTERLIS 2.3;
 CONTRACTED MODEL IGSFunction
   AT "mailto:stefan.ziegler@bd.so.ch" VERSION "2021-03-15" =
         
+   DOMAIN
+      COORD3 (ABSTRACT) = COORD NUMERIC,NUMERIC,NUMERIC;
+         
    !! TODO
    FUNCTION IGS_filter(objects: OBJECTS OF ANYCLASS; filter: TEXT): OBJECTS OF ANYCLASS;
-    
+   
    !! TODO
    FUNCTION IGS_min(objects: OBJECTS OF ANYCLASS; attribute: TEXT): NUMERIC;
-
+   
    !! TODO
    FUNCTION IGS_getYear(dummy: TEXT): NUMERIC;
-
+   
    !! TODO
    FUNCTION IGS_add(value1: NUMERIC; value2: NUMERIC): NUMERIC;
+
+   !! TODO
+   FUNCTION IGS_sub(value1: NUMERIC; value2: NUMERIC): NUMERIC;
+    
+   !! TODO
+   FUNCTION IGS_pow(value1: NUMERIC; value2: NUMERIC): NUMERIC;
+
+   !! TODO
+   FUNCTION IGS_sqrt(value: NUMERIC): NUMERIC;
+
+   !! TODO
+   FUNCTION IGS_abs(value: NUMERIC): NUMERIC;
+
+   !! TODO
+   FUNCTION IGS_getDistance(coord1: COORD3; coord2: COORD3): NUMERIC;
+
+   !! TODO
+   FUNCTION IGS_getFirstPoint(l: POLYLINE): COORD3;
+
+   !! TODO
+   FUNCTION IGS_getLastPoint(l: POLYLINE): COORD3;
+        
+   !! TODO
+   FUNCTION IGS_getLength(objects: OBJECTS OF ANYCLASS; attributePath: TEXT): NUMERIC;
    
 END IGSFunction.

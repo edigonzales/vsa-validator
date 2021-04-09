@@ -22,6 +22,9 @@ public class IGSMinIoxPlugin implements InterlisFunction {
         if (actualArguments[0].skipEvaluation()) {
             return actualArguments[0];
         }
+        if (actualArguments[1].skipEvaluation()) {
+            return actualArguments[1];
+        }
         if (actualArguments[0].isUndefined()) {
             return Value.createSkipEvaluation();
         }

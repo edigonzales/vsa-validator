@@ -9,7 +9,7 @@ import ch.interlis.iox_j.validator.InterlisFunction;
 import ch.interlis.iox_j.validator.ObjectPool;
 import ch.interlis.iox_j.validator.Value;
 
-public class IGSAddIoxPlugin implements InterlisFunction {
+public class IGSSubIoxPlugin implements InterlisFunction {
     private LogEventFactory logger = null;
 
     @Override
@@ -41,12 +41,12 @@ public class IGSAddIoxPlugin implements InterlisFunction {
             value2 = Double.valueOf(actualArguments[1].getNumeric());
         }
         
-        return new Value(value1 + value2);
+        return new Value(value1 - value2);
     }
 
     @Override
     public String getQualifiedIliName() {
-        return "IGSFunction.IGS_add";
+        return "IGSFunction.IGS_sub";
     }
 
     @Override
