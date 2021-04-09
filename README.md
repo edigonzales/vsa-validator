@@ -27,17 +27,6 @@
 - Knoten: Zwei Funktionstests funktionieren noch nicht. Siehe https://github.com/claeis/ilivalidator/issues/300
 
 
-            Math.abs(
-               Math.sub(
-                  LaengeEffektiv,
-                  Math.sqrt(
-                     Math.add(
-                        Math.pow(IGS_getLength(THIS, "Verlauf"),2),
-                        Math.abs(Math.pow(Math.sub(Kote_nach,Kote_von),2))
-                     )
-                  )
-               )
-            ) <= 0.1;
 
 
 
