@@ -81,8 +81,6 @@ public class IGSGetLengthIoxPluginTest {
             validator.validate(event);
         } while (!(event instanceof EndTransferEvent));
     }
-
-    // Implementierung mit OBJECTS OF ANYCLASS und attrPath probieren!
     
     @Test
     public void getLength2d_Ok() throws Exception {
@@ -92,11 +90,11 @@ public class IGSGetLengthIoxPluginTest {
         assertEquals(0, logger.getErrs().size());   
     }
     
-//    @Test
-//    public void getDistance2d_Fail() throws Exception {
-//        LogCollector logger = new LogCollector();
-//        runValidation(new File(TEST_IN+"getDistance2d_Fail.xtf"), logger);
-//                
-//        assertEquals(1, logger.getErrs().size());   
-//    }
+    @Test
+    public void getLength2d_Fail() throws Exception {
+        LogCollector logger = new LogCollector();
+        runValidation(new File(TEST_IN+"getLength2d_Fail.xtf"), logger);
+                
+        assertEquals(1, logger.getErrs().size());   
+    }
 }

@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
+
 import ch.ehi.basics.settings.Settings;
 import ch.ehi.basics.types.OutParam;
 import ch.interlis.ili2c.Ili2cException;
@@ -34,6 +37,8 @@ import ch.interlis.ili2c.parser.Ili23Parser;
 import ch.interlis.iom.IomObject;
 import ch.interlis.iom_j.Iom_jObject;
 import ch.interlis.iox.IoxValidationConfig;
+import ch.interlis.iox_j.jts.Iox2jts;
+import ch.interlis.iox_j.jts.Iox2jtsException;
 import ch.interlis.iox_j.logging.LogEventFactory;
 import ch.interlis.iox_j.validator.InterlisFunction;
 import ch.interlis.iox_j.validator.ObjectPool;
@@ -60,16 +65,11 @@ public class IGSGetLengthIoxPlugin implements InterlisFunction {
         if (actualArguments[1].isUndefined()) {
             return Value.createSkipEvaluation();
         }
-
-        System.out.println(actualArguments[0].getComplexObjects());
-        System.out.println(actualArguments[1].getValue());
         
-        // Um die Klasse zu bestimmen, kann ich das erste Objekt verwenden. Falls
+        // Um die Klasse zu bestimmen, kann man das erste Objekt verwenden. Falls
         // es mehrere Objekte sind, sind es immer Objekte von der gleichen Klasse.
         IomObject iomObj = (IomObject) actualArguments[0].getComplexObjects().toArray()[0];
         Viewable currentClass = (Viewable) td.getElement(iomObj.getobjecttag());
-
-        System.out.println(currentClass);
         
         ObjectPath attributePath = null;
         try {
@@ -79,45 +79,27 @@ public class IGSGetLengthIoxPlugin implements InterlisFunction {
             logger.addEvent(logger.logErrorMsg("Could not parse object or attribute path."));
             return Value.createSkipEvaluation();
         }
-        
-        System.out.println(attributePath);
-        
+                
         Value valueOfObjectPath = this.getValueFromObjectPath(null, iomObj, attributePath.getPathElements(), null);
-
-        System.out.println(valueOfObjectPath.getValue());
-        System.out.println(valueOfObjectPath.isUndefined());
-        System.out.println(valueOfObjectPath.getComplexObjects());
-        
         
         // Siehe ilivalidator-custom-functions GeometryUtils, um
-        // zu sehen wie mit den verschiedenen Möglichkeiten umgegangen
+        // zu sehen wie mit den verschiedenen Geometrie-Möglichkeiten umgegangen
         // werden muss.
         // Zum jetzigen Zeitpunkt akzeptieren wir nur Geometrien,
         // wie sie im VSA-DSS-Mini kodiert sind.
         // Etwas für Geom.getLength() oder so.
         
-        return Value.createSkipEvaluation();
+        IomObject geomObj = (IomObject) valueOfObjectPath.getComplexObjects().toArray()[0];
+        LineString line = null;
+        try {
+            line = new GeometryFactory().createLineString(Iox2jts.polyline2JTS(geomObj, false, 0).toCoordinateArray());
+        } catch (Iox2jtsException e) {
+            e.printStackTrace();
+            logger.addEvent(logger.logErrorMsg("Could not create jts linestring."));
+            return Value.createSkipEvaluation();
+        }
         
-        
-//        IomObject startObj = (IomObject) actualArguments[0].getComplexObjects().toArray()[0];
-//        IomObject endObj = (IomObject) actualArguments[1].getComplexObjects().toArray()[0];
-//                
-//        Double x1 = Double.parseDouble(startObj.getattrvalue("C1"));
-//        Double y1 = Double.parseDouble(startObj.getattrvalue("C2"));
-//        double z1 = 0;
-//        if (startObj.getattrvalue("C3") != null) {
-//            z1 = Double.parseDouble(startObj.getattrvalue("C3"));
-//        }
-//        
-//        Double x2 = Double.parseDouble(endObj.getattrvalue("C1"));
-//        Double y2 = Double.parseDouble(endObj.getattrvalue("C2"));
-//        double z2 = 0;
-//        if (endObj.getattrvalue("C3") != null) {
-//            z2 = Double.parseDouble(endObj.getattrvalue("C3"));
-//        }
-//
-//        double distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2));
-//        return new Value(distance);
+        return new Value(line.getLength());
     }
 
     @Override
@@ -136,9 +118,9 @@ public class IGSGetLengthIoxPlugin implements InterlisFunction {
         this.objectPool = objectPool;
         this.tag2class = ch.interlis.iom_j.itf.ModelUtilities.getTagMap(td);        
     }
-    
- 
-    
+       
+    // Copy/paste from https://github.com/claeis/iox-ili/blob/2e9bdcddd4ee176472a68b432690715c5d821622/src/main/java/ch/interlis/iox_j/validator/Validator.java#L1614
+    // See https://github.com/claeis/ilivalidator/issues/303
     private Value getValueFromObjectPath(IomObject parentObject, IomObject iomObjStart, PathEl[] pathElements,
             RoleDef firstRole) {
         ArrayList<IomObject> currentObjects = new ArrayList<IomObject>();
@@ -161,7 +143,7 @@ public class IGSGetLengthIoxPlugin implements InterlisFunction {
                     }
 
                     if (role == null) {
-//                        throw new IllegalStateException(rsrc.getString("getValueFromObjectPath.roleIsNotBeEmpty"));
+                        throw new IllegalStateException("getValueFromObjectPath.roleIsNotBeEmpty");
                     } else {
                         // IF embedded association and first PathEl of objectpath
                         if (parentObject != null && k == 0) {
@@ -468,10 +450,10 @@ public class IGSGetLengthIoxPlugin implements InterlisFunction {
             if (expectedIndex <= attrValueCount && expectedIndex > 0) {
                 iomObj = iomObj.getattrobj(currentAttrName, expectedIndex - 1);
                 if (iomObj == null) {
-//                    throw new IllegalStateException(rsrc.getString("getIomObjWithIndex.thereIsNoRecordFoundForThisIndex"));
+                    throw new IllegalStateException("getIomObjWithIndex.thereIsNoRecordFoundForThisIndex");
                 }
             } else {
-//                throw new IllegalStateException(rsrc.getString("getIomObjWithIndex.thereIsNoRecordFoundForThisIndex"));
+                throw new IllegalStateException("getIomObjWithIndex.thereIsNoRecordFoundForThisIndex");
             }
         }
         return iomObj;
