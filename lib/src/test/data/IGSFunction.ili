@@ -19,6 +19,9 @@ CONTRACTED MODEL IGSFunction
     
    !! TODO
    FUNCTION IGS_sub(value1: NUMERIC; value2: NUMERIC): NUMERIC;
+
+   !! TODO
+   FUNCTION IGS_div(value1: NUMERIC; value2: NUMERIC): NUMERIC;
     
    !! TODO
    FUNCTION IGS_pow(value1: NUMERIC; value2: NUMERIC): NUMERIC;
