@@ -3,6 +3,7 @@ plugins {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven { url "http://jars.interlis.ch" }
 }
@@ -11,8 +12,8 @@ configurations.all {
     resolutionStrategy {
         force 'ch.ehi:ehibasics:1.4.0'
 
-        //cacheDynamicVersionsFor 10*60, 'seconds'
-        //cacheChangingModulesFor 0, 'seconds'
+        cacheDynamicVersionsFor 0, 'seconds'
+        cacheChangingModulesFor 0, 'seconds'
     }
 }
 

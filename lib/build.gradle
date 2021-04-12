@@ -6,6 +6,7 @@ sourceCompatibility = '8'
 targetCompatibility = '8'
 
 repositories {
+    mavenLocal()
     maven { url "http://jars.interlis.ch" }
     //maven { url "https://repo.osgeo.org/repository/release" }
     maven { url "http://maven.indexdata.com" }
@@ -23,7 +24,7 @@ configurations.all {
         force 'ch.interlis:ili2c-core:5.2.0'    
         force 'ch.ehi:ehibasics:1.4.0'
 
-        //cacheDynamicVersionsFor 10*60, 'seconds'
+        //cacheDynamicVersionsFor 0, 'seconds'
         //cacheChangingModulesFor 0, 'seconds'
     }
 }
