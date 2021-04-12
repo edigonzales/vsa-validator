@@ -12,6 +12,9 @@ CONTRACTED MODEL IGSFunction
    FUNCTION IGS_min(objects: OBJECTS OF ANYCLASS; attribute: TEXT): NUMERIC;
    
    !! TODO
+   FUNCTION IGS_max(objects: OBJECTS OF ANYCLASS; attribute: TEXT): NUMERIC;
+   
+   !! TODO
    FUNCTION IGS_getYear(dummy: TEXT): NUMERIC;
    
    !! TODO

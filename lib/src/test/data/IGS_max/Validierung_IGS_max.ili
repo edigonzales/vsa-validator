@@ -1,0 +1,27 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_FP (de)
+AT "http://www.geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS UNQUALIFIED INTERLIS;
+  IMPORTS UNQUALIFIED IGSFunction;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+	VIEW v_Knoten
+    	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Knoten;
+    =
+        ALL OF Knoten;
+         
+         !!@ name = Maximum;
+         !!@ ilivalid.msg = "Maximaler Wert falsch.";
+         SET CONSTRAINT IGS_max(ALL, "Sohlenkote") > 250;
+
+    END v_Knoten;
+        
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_FP.

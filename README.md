@@ -20,7 +20,7 @@
   - div
   - ...
 - Ab 3210 wieder nur ein Verzeichnis mit XXXX_fail.xtf und XXXX_ok.xtf im gleichen Verzeichnis.
-
+- IGS_max mit Expression ist ein Blenderfunktion. Sie funktioniert genau nur für den Usecase im VSA-Check-Modell. Wenn überhaupt muss man das generisch in sauber lösen. Entweder mit der INTERLIS-Sprache selber oder z.B. mit CQL o.ä.
 
 
 ## Requirements
