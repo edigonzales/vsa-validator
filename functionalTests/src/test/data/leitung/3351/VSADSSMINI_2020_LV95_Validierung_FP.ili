@@ -1,0 +1,43 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_FP (de)
+AT "http://www.geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS UNQUALIFIED INTERLIS;
+  IMPORTS UNQUALIFIED IGSFunction;
+  IMPORTS UNQUALIFIED MINIFunction;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+	VIEW v_Leitung
+    	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Leitung;
+    =
+        ALL OF Leitung;
+                
+        !!@ name = 3351
+        !!@ ilivalid.msg = "Leitung mit Niederschlagsabwasser mündet in Leitung ohne Niederschlagsabwasser (Planungszustand)" 
+         MANDATORY CONSTRAINT   
+            NOT (
+               Nutzungsart_geplant == #Bachwasser
+               OR Nutzungsart_geplant == #entlastetes_Mischabwasser
+               OR Nutzungsart_geplant == #Mischabwasser
+               OR Nutzungsart_geplant == #Niederschlagsabwasser
+               OR Nutzungsart_geplant == #Reinabwasser
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_nachRef),
+                     "Nutzungsart_geplant=Industrieabwasser,Schmutzabwasser"
+                  )
+               ) == 0
+           );
+            
+    END v_Leitung;
+        
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_FP.

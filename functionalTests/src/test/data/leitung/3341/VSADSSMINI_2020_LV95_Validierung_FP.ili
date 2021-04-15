@@ -1,0 +1,41 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_FP (de)
+AT "http://www.geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS UNQUALIFIED INTERLIS;
+  IMPORTS UNQUALIFIED IGSFunction;
+  IMPORTS UNQUALIFIED MINIFunction;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+	VIEW v_Leitung
+    	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Leitung;
+    =
+        ALL OF Leitung;
+                
+        !!@ name = 3341
+        !!@ ilivalid.msg = "Leitung mit verschmutztem Abwasser mündet in Leitung mit unverschmutztem Abwasser (Planungszustand)" 
+         MANDATORY CONSTRAINT   
+            NOT (
+               Nutzungsart_geplant == #Industrieabwasser
+               OR Nutzungsart_geplant == #Mischabwasser
+               OR Nutzungsart_geplant == #Schmutzabwasser
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_nachRef),
+                     "Nutzungsart_geplant=Bachwasser,entlastetes_Mischabwasser,Niederschlagsabwasser,Reinabwasser,unbekannt"
+                  )
+               ) == 0
+            );
+            
+    END v_Leitung;
+        
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_FP.
