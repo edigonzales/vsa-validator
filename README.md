@@ -3,7 +3,7 @@
 ## Todo
 - Trennen der Funktionstest: Ok und Fail je Test. Sonst testet man nicht wirklich alles.
 - IGS_filter Implementierung (in "Gut")
-- IGS_getLength mit GeoemtryUtils mit allen möglichen Varianten.
+- IGS_getLength / getArea mit GeoemtryUtils mit allen möglichen Varianten.
 - getValueFromObjectPath in eigene Klasse 
 - clean repo
 - Versionen der Libs abstimmen. Am Ende des Tages muss es mit ilivalidator funktionieren.

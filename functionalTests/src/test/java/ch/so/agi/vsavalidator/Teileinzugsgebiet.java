@@ -782,4 +782,284 @@ public class Teileinzugsgebiet {
         assertFalse(content.contains("Warning"));
         assertFalse(content.contains("Error"));
     }
+    
+    @Test
+    public void Cid_4210_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4210/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4210/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4210/4210_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: tid deg5mQXX20003001: Schmutzabwasserparameter ohne Anschlussknoten (Ist-Zustand)"));
+    }
+    
+    @Test
+    public void Cid_4210_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4210/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4210/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4210/4210_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_4211_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4211/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4211/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4211/4211_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: tid deg5mQXX20003001: Schmutzabwasserparameter ohne Anschlussknoten (Planungszustand)"));
+    }
+    
+    @Test
+    public void Cid_4211_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4211/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4211/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4211/4211_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_4220_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4220/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4220/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4220/4220_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: tid deg5mQXX20003001: Regenabwasserparameter ohne Anschlussknoten (Ist-Zustand)"));
+    }
+    
+    @Test
+    public void Cid_4220_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4220/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4220/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4220/4220_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_4221_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4221/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4221/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4221/4221_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: tid deg5mQXX20003001: Regenabwasserparameter ohne Anschlussknoten (Planungszustand)"));
+    }
+    
+    @Test
+    public void Cid_4221_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4221/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4221/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4221/4221_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_4230_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4230/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4230/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4230/4230_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: tid deg5mQXX20003001: Summe Abflussbeiwerte >100 (Ist-Zustand)"));
+    }
+    
+    @Test
+    public void Cid_4230_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4230/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4230/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4230/4230_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_4231_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4231/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4231/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4231/4231_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: tid deg5mQXX20003001: Summe Abflussbeiwerte >100 (Planungszustand)"));
+    }
+    
+    @Test
+    public void Cid_4231_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4231/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4231/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4231/4231_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_4240_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4240/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4240/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4240/4240_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: tid deg5mQXX20003001: Summe Befestigungsgrade >100 (Ist-Zustand)"));
+    }
+    
+    @Test
+    public void Cid_4240_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4240/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4240/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4240/4240_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_4241_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4241/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4241/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4241/4241_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: tid deg5mQXX20003001: Summe Befestigungsgrade >100 (Planungszustand)"));
+    }
+    
+    @Test
+    public void Cid_4241_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"teileinzugsgebiet/4241/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"teileinzugsgebiet/4241/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"teileinzugsgebiet/4241/4241_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
 }
