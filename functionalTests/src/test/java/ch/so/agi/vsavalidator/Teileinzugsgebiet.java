@@ -377,7 +377,7 @@ public class Teileinzugsgebiet {
         assertFalse(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Error: line 51: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: tid deg5mQXX20003001: Fehlender Anschlussknoten (SW_Ist)"));
+        assertTrue(content.contains("Error: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: tid deg5mQXX20003001: Fehlender Anschlussknoten (SW_Ist)"));
     }
     
     @Test
