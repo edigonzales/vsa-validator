@@ -1173,7 +1173,7 @@ public class Leitung {
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9102_02/config.toml");
         settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/9102_02/9102_02_ok.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9102_02/9102_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
