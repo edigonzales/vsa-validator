@@ -1,0 +1,30 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_FP (de)
+AT "http://www.geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS UNQUALIFIED INTERLIS;
+  IMPORTS UNQUALIFIED IGSFunction;
+  IMPORTS UNQUALIFIED MINIFunction;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+	VIEW v_Leitung
+    	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Leitung;
+    =
+        ALL OF Leitung;
+                
+        !!@ name = 9104
+        !!@ ilivalid.msg = "LaengeEffektiv ist nicht plausibel" 
+         MANDATORY CONSTRAINT 
+            (LaengeEffektiv >= 1.0)
+            AND (LaengeEffektiv <= 200.0);
+ 
+    END v_Leitung;
+        
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_FP.

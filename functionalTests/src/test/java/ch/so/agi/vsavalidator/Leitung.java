@@ -1075,4 +1075,284 @@ public class Leitung {
         assertFalse(content.contains("Warning"));
         assertFalse(content.contains("Error"));
     }
+    
+    @Test
+    public void Cid_9101_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9101/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9101/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9101/9101_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 38: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Baujahr ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9101_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9101/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9101/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9101/9101_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_9102_01_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9102_01/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9102_01/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9102_01/9102_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 38: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Kote_von ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9102_01_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9102_01/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9102_01/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9102_01/9102_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_9102_02_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9102_02/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9102_02/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9102_02/9102_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 38: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Kote_nach ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9102_02_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9102_02/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9102_02/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9102_02/9102_02_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_9104_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9104/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9104/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9104/9104_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 38: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: LaengeEffektiv ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9104_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9104/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9104/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9104/9104_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_9105_01_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9105_01/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9105_01/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9105_01/9105_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 38: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Lichte_Breite ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9105_01_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9105_01/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9105_01/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9105_01/9105_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_9105_02_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9105_02/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9105_02/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9105_02/9105_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 38: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Lichte_Hoehe ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9105_02_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9105_02/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9105_02/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9105_02/9105_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_9106_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9106/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9106/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9106/9106_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 38: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: WBW_Basisjahr ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9106_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9106/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9106/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9106/9106_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
+    
+    @Test
+    public void Cid_9107_fail(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9107/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9107/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9107/9107_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 38: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Wiederbeschaffungswert ist nicht plausibel"));
+    }
+    
+    @Test
+    public void Cid_9107_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/9107/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/9107/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/9107/9107_ok.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertFalse(content.contains("Warning"));
+        assertFalse(content.contains("Error"));
+    }
 }
