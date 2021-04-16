@@ -74,28 +74,41 @@ public class IGSFilterIoxPlugin implements InterlisFunction {
     
     private boolean evaluateFilter(IomObject iomObj, String filterString) {
         String[] filterArray = filterString.split(";");
-        for (String filter : filterArray) {
+        
+        // Jeder Filter muss erfüllt sein.
+        List<String> evaluatedFilters = new ArrayList<String>(); 
+        for (String filter : filterArray) {            
             String attrName = filter.split("=")[0];
             String valuesString = filter.split("=")[1];
             String[] values = valuesString.split(",");
 
             String attrValue = iomObj.getattrvalue(attrName);
             if (attrValue == null) {
+                // Falls der Wert eines Attributes nicht vorhanden ist (=null), 
+                // wird die komplette Auswertung des Filters nichtig.
+                // -> Das Objekt erfüllt die Filterkriterien nicht. Es
+                // muss nicht weiter geprüft werden.
                 return false;
             } else {
+                // Mindestens einmal muss value dem Wert des Attributes entsprechen.
+                // Oder mit value beginnen.
                 for (String value : values) {
                     if (value.endsWith("*")) {
                         if (attrValue.startsWith(value.substring(0, value.length() - 1))) {
-                            return true;
-                        }
+                            evaluatedFilters.add(filter);
+                        } 
                     } else {
                         if (attrValue.equals(value)) {
-                            return true;
+                            evaluatedFilters.add(filter);
                         }
                     }
                 }
             }
         }
-        return false;
+        if (evaluatedFilters.size() == filterArray.length) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

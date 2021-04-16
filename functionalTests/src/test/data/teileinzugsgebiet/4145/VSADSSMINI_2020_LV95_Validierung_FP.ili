@@ -1,0 +1,36 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_FP (de)
+AT "http://www.geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS UNQUALIFIED INTERLIS;
+  IMPORTS UNQUALIFIED IGSFunction;
+  IMPORTS UNQUALIFIED MINIFunction;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+    VIEW v_Teileinzugsgebiet
+        PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet;
+    =
+        ALL OF Teileinzugsgebiet;
+                
+        !!@ name = 4145
+        !!@ ilivalid.msg = "Fehlender Anschlussknoten (RW_geplant)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_geplant == #Mischsystem
+            )
+            OR (
+               NOT(DEFINED(Knoten_RW_geplantRef))
+            );
+
+
+ 
+    END v_Teileinzugsgebiet;
+        
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_FP.
