@@ -104,13 +104,12 @@ public class IGSGetAreaIoxPlugin implements InterlisFunction {
             return Value.createSkipEvaluation();
         }
       
-        System.out.println(polygon.getArea());
         return new Value(polygon.getArea());
     }
 
     @Override
     public String getQualifiedIliName() {
-        return "IGSFunction.IGS_getLength";
+        return "IGSFunction.IGS_getArea";
     }
 
     @Override

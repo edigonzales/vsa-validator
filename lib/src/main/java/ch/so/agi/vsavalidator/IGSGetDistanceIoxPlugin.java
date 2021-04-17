@@ -17,12 +17,24 @@ public class IGSGetDistanceIoxPlugin implements InterlisFunction {
         if (actualArguments[0].skipEvaluation()) {
             return actualArguments[0];
         }
+        if (actualArguments[1].skipEvaluation()) {
+            return actualArguments[1];
+        }
         if (actualArguments[0].isUndefined()) {
             return Value.createSkipEvaluation();
         }
         if (actualArguments[1].isUndefined()) {
             return Value.createSkipEvaluation();
         }
+        
+        System.out.println(actualArguments[0].getOid());
+        System.out.println(actualArguments[0].getRefTypeName());
+        System.out.println(actualArguments[0].getType());
+        System.out.println(actualArguments[0].getValue());
+        System.out.println(actualArguments[0].getViewable());
+        System.out.println(actualArguments[0].getValues());
+        System.out.println(actualArguments[0].getComplexObjects().toArray()[0]);
+        
         
         IomObject startObj = (IomObject) actualArguments[0].getComplexObjects().toArray()[0];
         IomObject endObj = (IomObject) actualArguments[1].getComplexObjects().toArray()[0];

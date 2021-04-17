@@ -47,4 +47,7 @@ CONTRACTED MODEL IGSFunction
    !! TODO
    FUNCTION IGS_getLength(objects: OBJECTS OF ANYCLASS; attributePath: TEXT): NUMERIC;
    
+   !! TODO
+   FUNCTION IGS_getArea(objects: OBJECTS OF ANYCLASS; attributePath: TEXT): NUMERIC;
+   
 END IGSFunction.
