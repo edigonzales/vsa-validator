@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.Polygon;
 
 import ch.ehi.basics.settings.Settings;
 import ch.ehi.basics.types.OutParam;
@@ -44,7 +45,9 @@ import ch.interlis.iox_j.validator.ObjectPool;
 import ch.interlis.iox_j.validator.Validator;
 import ch.interlis.iox_j.validator.Value;
 
-public class IGSGetLengthIoxPlugin implements InterlisFunction {
+public class IGSGetAreaIoxPlugin implements InterlisFunction {
+    public static final double strokeP = 0.002;
+
     private LogEventFactory logger = null;
     private TransferDescription td = null;
     private ObjectPool objectPool = null;
@@ -52,7 +55,7 @@ public class IGSGetLengthIoxPlugin implements InterlisFunction {
     private Validator validator = null;
 
     @Override
-    public Value evaluate(String validationKind, String usageScope, IomObject mainObj, Value[] actualArguments) {
+    public Value evaluate(String validationKind, String usageScope, IomObject mainObj, Value[] actualArguments) {        
         if (actualArguments[0].skipEvaluation()) {
             return actualArguments[0];
         }
@@ -81,7 +84,7 @@ public class IGSGetLengthIoxPlugin implements InterlisFunction {
             logger.addEvent(logger.logErrorMsg("Could not parse object or attribute path."));
             return Value.createSkipEvaluation();
         }
-                
+        
         Value valueOfObjectPath = validator.getValueFromObjectPath(null, iomObj, attributePath.getPathElements(), null);
         
         // Siehe ilivalidator-custom-functions GeometryUtils, um
@@ -89,19 +92,20 @@ public class IGSGetLengthIoxPlugin implements InterlisFunction {
         // werden muss.
         // Zum jetzigen Zeitpunkt akzeptieren wir nur Geometrien,
         // wie sie im VSA-DSS-Mini kodiert sind.
-        // Etwas für Geom.getLength() oder so.
-        
+        // Etwas für Geom.getArea() oder so.
+      
         IomObject geomObj = (IomObject) valueOfObjectPath.getComplexObjects().toArray()[0];
-        LineString line = null;
+        Polygon polygon = null;
         try {
-            line = new GeometryFactory().createLineString(Iox2jts.polyline2JTS(geomObj, false, 0).toCoordinateArray());
+            polygon = Iox2jts.surface2JTS(geomObj, strokeP);
         } catch (Iox2jtsException e) {
             e.printStackTrace();
-            logger.addEvent(logger.logErrorMsg("Could not create jts linestring."));
+            logger.addEvent(logger.logErrorMsg("Could not create jts polygon."));
             return Value.createSkipEvaluation();
         }
-        
-        return new Value(line.getLength());
+      
+        System.out.println(polygon.getArea());
+        return new Value(polygon.getArea());
     }
 
     @Override
@@ -118,7 +122,7 @@ public class IGSGetLengthIoxPlugin implements InterlisFunction {
         this.logger.setValidationConfig(validationConfig);
         this.td = td;
         this.objectPool = objectPool;
-        this.tag2class = ch.interlis.iom_j.itf.ModelUtilities.getTagMap(td); 
+        this.tag2class = ch.interlis.iom_j.itf.ModelUtilities.getTagMap(td);   
         this.validator = (Validator) settings.getTransientObject(this.IOX_VALIDATOR);
     }
 }

@@ -19,18 +19,19 @@ configurations {
 
 configurations.all {
     resolutionStrategy {
-        force 'ch.interlis:iox-ili:1.21.6+'
+        //force 'ch.interlis:iox-ili:1.21.6+'
         force 'ch.interlis:ili2c-tool:5.2.0'
         force 'ch.interlis:ili2c-core:5.2.0'    
         force 'ch.ehi:ehibasics:1.4.0'
 
-        //cacheDynamicVersionsFor 0, 'seconds'
-        //cacheChangingModulesFor 0, 'seconds'
+        cacheDynamicVersionsFor 0, 'seconds'
+        cacheChangingModulesFor 0, 'seconds'
     }
 }
 
 dependencies {
-    api 'ch.interlis:iox-ili:1.21.6+'
+    //api 'ch.interlis:iox-ili:1.21.6+'
+    compile group: "ch.interlis", name: "iox-ili", version: "1.21.6-SNAPSHOT", changing: true
     api 'ch.interlis:ili2c-tool:5.2.0'
     api 'ch.interlis:ili2c-core:5.2.0'
     api 'ch.ehi:ehibasics:1.4.0'
