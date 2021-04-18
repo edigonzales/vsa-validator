@@ -42,6 +42,9 @@ CONTRACTED MODEL IGSFunction
    FUNCTION IGS_getDistance2(objects1: OBJECTS OF ANYCLASS; attributePath1: TEXT; objects2: OBJECTS OF ANYCLASS; attributePath2: TEXT): NUMERIC;
 
    !! TODO
+   FUNCTION IGS_isInsideSurface(objects1: OBJECTS OF ANYCLASS; attributePath1: TEXT; objects2: OBJECTS OF ANYCLASS; attributePath2: TEXT): BOOLEAN;
+
+   !! TODO
    FUNCTION IGS_getFirstPoint(l: POLYLINE): COORD3;
 
    !! TODO

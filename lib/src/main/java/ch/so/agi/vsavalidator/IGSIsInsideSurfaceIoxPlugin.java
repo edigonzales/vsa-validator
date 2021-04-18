@@ -22,7 +22,7 @@ import ch.interlis.iox_j.validator.ObjectPool;
 import ch.interlis.iox_j.validator.Validator;
 import ch.interlis.iox_j.validator.Value;
 
-public class IGSGetDistance2IoxPlugin implements InterlisFunction {
+public class IGSIsInsideSurfaceIoxPlugin implements InterlisFunction {
     public static final double strokeP = 0.002;
 
     private LogEventFactory logger = null;
@@ -56,17 +56,17 @@ public class IGSGetDistance2IoxPlugin implements InterlisFunction {
             return Value.createSkipEvaluation();
         }
         
-        IomObject startObj = (IomObject) actualArguments[0].getComplexObjects().toArray()[0];
-        String startAttributePath = actualArguments[1].getValue();
+        IomObject firstObj = (IomObject) actualArguments[0].getComplexObjects().toArray()[0];
+        String firstAttributePath = actualArguments[1].getValue();
 
-        IomObject endObj = (IomObject) actualArguments[2].getComplexObjects().toArray()[0];
-        String endAttributePath = actualArguments[3].getValue();
+        IomObject secondObj = (IomObject) actualArguments[2].getComplexObjects().toArray()[0];
+        String secondAttributePath = actualArguments[3].getValue();
         
-        Value startValue = null;
-        Value endValue = null;
+        Value firstValue = null;
+        Value secondValue = null;
         try {
-            startValue = this.getValueFromObjectPath(startObj, startAttributePath);
-            endValue = this.getValueFromObjectPath(endObj, endAttributePath);
+            firstValue = this.getValueFromObjectPath(firstObj, firstAttributePath);
+            secondValue = this.getValueFromObjectPath(secondObj, secondAttributePath);
         } catch (Ili2cException e) {
             e.printStackTrace();
             logger.addEvent(logger.logErrorMsg("Could not parse object or attribute path."));
@@ -74,16 +74,16 @@ public class IGSGetDistance2IoxPlugin implements InterlisFunction {
         }
         
         // Es ist wiederum nur die Variane DSS-mini implementiert, d.h.
-        // erster Parameter ist eine Koordinate, zweiter Parameter eine
-        // einfaches Polygon.
-        IomObject geomStartObj = (IomObject) startValue.getComplexObjects().toArray()[0];
-        IomObject geomEndObj = (IomObject) endValue.getComplexObjects().toArray()[0];
+        // erster Parameter ist ein Polygon, zweiter Parameter eine
+        // Koordinate.
+        IomObject geomFirstObj = (IomObject) firstValue.getComplexObjects().toArray()[0];
+        IomObject geomSecondObj = (IomObject) secondValue.getComplexObjects().toArray()[0];
         
         Coordinate coord = null;
         Polygon polygon = null;
         try {
-            coord = Iox2jts.coord2JTS(geomStartObj);
-            polygon = Iox2jts.surface2JTS(geomEndObj, strokeP);
+            polygon = Iox2jts.surface2JTS(geomFirstObj, strokeP);
+            coord = Iox2jts.coord2JTS(geomSecondObj);
         } catch (Iox2jtsException e) {
             e.printStackTrace();
             logger.addEvent(logger.logErrorMsg("Could not parse geometry object."));
@@ -94,14 +94,12 @@ public class IGSGetDistance2IoxPlugin implements InterlisFunction {
             logger.addEvent(logger.logErrorMsg("No geometery found."));
             return Value.createSkipEvaluation();
         }
-        
-        double distance = polygon.distance(new GeometryFactory().createPoint(coord));
-        return new Value(distance);
+        return new Value(new GeometryFactory().createPoint(coord).within(polygon));
     }
 
     @Override
     public String getQualifiedIliName() {
-        return "IGSFunction.IGS_getDistance2";
+        return "IGSFunction.IGS_isInsideSurface";
     }
 
     @Override
