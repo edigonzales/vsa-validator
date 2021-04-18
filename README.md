@@ -30,7 +30,7 @@
 
 ## VSADSSMINI_2020_LV95_CHECK_FP
 
-- Knoten: Zwei Funktionstests funktionieren noch nicht. Siehe https://github.com/claeis/ilivalidator/issues/300
+- Knoten: Einige Funktionstests funktionieren noch nicht. Siehe https://github.com/claeis/ilivalidator/issues/300
 
 
 
