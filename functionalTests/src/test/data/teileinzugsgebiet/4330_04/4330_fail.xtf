@@ -69,7 +69,7 @@
             </BOUNDARY>
           </SURFACE>
         </Perimeter>
-        <Knoten_SW_IstRef REF="deg5mQXX20001001"></Knoten_SW_IstRef>
+        <Knoten_RW_geplantRef REF="deg5mQXX20001001"></Knoten_RW_geplantRef>
       </VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet>
     </VSADSSMINI_2020_LV95.VSADSSMini>
   </DATASECTION>

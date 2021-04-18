@@ -18,10 +18,10 @@ VERSION "2020-11-12"  =
         ALL OF Teileinzugsgebiet;
                 
         !!@ name = 4330
-        !!@ ilivalid.msg = "Grosse Distanz zum Anschlussknoten (SW_Ist)"
+        !!@ ilivalid.msg = "Grosse Distanz zum Anschlussknoten (RW_geplant)"
          MANDATORY CONSTRAINT
             IGS_getDistance2(
-                Knoten_SW_IstRef->THIS, "Lage",
+                Knoten_RW_geplantRef->THIS, "Lage",
                 THIS, "Perimeter"
             ) < 200.0;
  

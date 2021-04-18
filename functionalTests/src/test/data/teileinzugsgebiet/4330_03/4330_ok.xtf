@@ -25,7 +25,7 @@
         <DatenlieferantRef REF="deg5mQXX20000001"/>
         <Bezeichnung>Knoten1</Bezeichnung>
         <Lage>
-            <COORD><C1>2601000.000</C1><C2>1200000.000</C2></COORD>
+            <COORD><C1>2600100.000</C1><C2>1200000.000</C2></COORD>
         </Lage>
         <BetreiberRef REF="deg5mQXX20000001"/>
         <EigentuemerRef REF="deg5mQXX20000001"/>
@@ -69,7 +69,7 @@
             </BOUNDARY>
           </SURFACE>
         </Perimeter>
-        <Knoten_SW_IstRef REF="deg5mQXX20001001"></Knoten_SW_IstRef>
+        <Knoten_SW_geplantRef REF="deg5mQXX20001001"></Knoten_SW_geplantRef>
       </VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet>
     </VSADSSMINI_2020_LV95.VSADSSMini>
   </DATASECTION>
