@@ -20,23 +20,7 @@ public class Leitung {
     private final String LOGFILE_NAME = "ilivalidator.log";
 
     @Test
-    public void Cid_1020_fehler(@TempDir Path tempDir) throws Exception {
-        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
-        
-        Settings settings = new Settings();
-        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/1020_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/1020_fehler/config.toml");
-        
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/1020_fehler/1020.xtf", settings);
-        assertTrue(valid);
-        
-        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Warning: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Die Bezeichnung 'Leitung_1' enthält nicht empfohlene Zeichen (alle ausser [0-9], [A-Z], [.] und [-])"));
-    }
-
-    @Test
-    public void Cid_1020(@TempDir Path tempDir) throws Exception {
+    public void Cid_1020_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -44,7 +28,23 @@ public class Leitung {
         settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/1020/");
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/1020/config.toml");
         
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/1020/1020.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/1020/1020_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Die Bezeichnung 'Leitung_1' enthält nicht empfohlene Zeichen (alle ausser [0-9], [A-Z], [.] und [-])"));
+    }
+
+    @Test
+    public void Cid_1020_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/1020/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/1020/config.toml");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/1020/1020_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -53,14 +53,14 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_1021_fehler(@TempDir Path tempDir) throws Exception {
+    public void Cid_1021_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/1021_fehler/");
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/1021/");
         
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/1021_fehler/1021.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/1021/1021_fail.xtf", settings);
         assertFalse(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -68,14 +68,14 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_1021(@TempDir Path tempDir) throws Exception {
+    public void Cid_1021_ok(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
         settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/1021/");
         
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/1021/1021.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/1021/1021_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
