@@ -1,5 +1,0 @@
-["PARAMETER"]
-additionalModels="VSADSSMINI_2020_LV95_Validierung_FP;IGSFunction;MINIFunction"
-
-["VSADSSMINI_2020_LV95_Validierung_FP.VSADSSMini_Validierung.v_Knoten.2130"]
-check="warning"
