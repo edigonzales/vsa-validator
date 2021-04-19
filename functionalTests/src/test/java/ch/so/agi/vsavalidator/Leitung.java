@@ -84,23 +84,7 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3010_fehler(@TempDir Path tempDir) throws Exception {
-        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
-        
-        Settings settings = new Settings();
-        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3010_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3010_fehler/config.toml");
-        
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3010_fehler/3010.xtf", settings);
-        assertFalse(valid);
-        
-        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Error: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Fehlender Knoten_von (PAA)"));
-    }
-    
-    @Test
-    public void Cid_3010(@TempDir Path tempDir) throws Exception {
+    public void Cid_3010_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -108,7 +92,23 @@ public class Leitung {
         settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3010/");
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3010/config.toml");
         
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3010/3010.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3010/3010_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Fehlender Knoten_von (PAA)"));
+    }
+    
+    @Test
+    public void Cid_3010_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3010/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3010/config.toml");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3010/3010_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -117,15 +117,15 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3020_fehler(@TempDir Path tempDir) throws Exception {
+    public void Cid_3020_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3020_fehler/");
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3020/");
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3020_fehler/config.toml");
         
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3020_fehler/3020.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3020/3020_fail.xtf", settings);
         assertFalse(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -133,7 +133,7 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3020(@TempDir Path tempDir) throws Exception {
+    public void Cid_3020_ok(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -141,7 +141,7 @@ public class Leitung {
         settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3020/");
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3020/config.toml");
         
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3020/3020.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3020/3020_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -150,23 +150,7 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3030_fehler(@TempDir Path tempDir) throws Exception {
-        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
-        
-        Settings settings = new Settings();
-        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3030_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3030_fehler/config.toml");
-        
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3030_fehler/3030.xtf", settings);
-        assertFalse(valid);
-        
-        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Error: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Leitung_nach erfasst bei PAA"));
-    }
-    
-    @Test
-    public void Cid_3030(@TempDir Path tempDir) throws Exception {
+    public void Cid_3030_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -174,7 +158,23 @@ public class Leitung {
         settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3030/");
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3030/config.toml");
         
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3030/3030.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3030/3030_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 21: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Leitung_nach erfasst bei PAA"));
+    }
+    
+    @Test
+    public void Cid_3030_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3030/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3030/config.toml");
+        
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3030/3030_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -183,24 +183,7 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3040_fehler(@TempDir Path tempDir) throws Exception {
-        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
-        
-        Settings settings = new Settings();
-        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3040_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3040_fehler/config.toml");
-        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
-
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3040_fehler/3040.xtf", settings);
-        assertFalse(valid);
-        
-        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Error: line 61: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002002: PAA-Leitung oberhalb von SAA-Leitung"));
-    }
-    
-    @Test
-    public void Cid_3040(@TempDir Path tempDir) throws Exception {
+    public void Cid_3040_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -209,7 +192,24 @@ public class Leitung {
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3040/config.toml");
         settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3040/3040.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3040/3040_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 61: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002002: PAA-Leitung oberhalb von SAA-Leitung"));
+    }
+    
+    @Test
+    public void Cid_3040_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3040/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3040/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3040/3040_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -218,15 +218,15 @@ public class Leitung {
     } 
     
     @Test
-    public void Cid_3050a_fehler(@TempDir Path tempDir) throws Exception {
+    public void Cid_3050_01_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050a_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050a_fehler/config.toml");
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050_01/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050_01/config.toml");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050a_fehler/3050.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050_01/3050_fail.xtf", settings);
         assertFalse(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -234,15 +234,15 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3050a(@TempDir Path tempDir) throws Exception {
+    public void Cid_3050_01_ok(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050a/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050a/config.toml");
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050_01/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050_01/config.toml");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050a/3050.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050_01/3050_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -251,15 +251,15 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3050b_fehler(@TempDir Path tempDir) throws Exception {
+    public void Cid_3050_02_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050b_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050b_fehler/config.toml");
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050_02/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050_02/config.toml");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050b_fehler/3050.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050_02/3050_fail.xtf", settings);
         assertFalse(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -267,15 +267,15 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3050b(@TempDir Path tempDir) throws Exception {
+    public void Cid_3050_02_ok(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050b/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050b/config.toml");
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3050_02/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3050_02/config.toml");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050b/3050.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3050_02/3050_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -284,23 +284,7 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3070_fehler(@TempDir Path tempDir) throws Exception {
-        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
-        
-        Settings settings = new Settings();
-        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3070_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3070_fehler/config.toml");
-
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3070_fehler/3070.xtf", settings);
-        assertFalse(valid);
-        
-        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Error: line 31: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Start- und Endknoten identisch"));
-    }
-    
-    @Test
-    public void Cid_3070(@TempDir Path tempDir) throws Exception {
+    public void Cid_3070_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -308,7 +292,23 @@ public class Leitung {
         settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3070/");
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3070/config.toml");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3070/3070.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3070/3070_fail.xtf", settings);
+        assertFalse(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Error: line 31: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Start- und Endknoten identisch"));
+    }
+    
+    @Test
+    public void Cid_3070_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3070/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3070/config.toml");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3070/3070_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -317,15 +317,15 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3080_fehler(@TempDir Path tempDir) throws Exception {
+    public void Cid_3080_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3080_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3080_fehler/config.toml");
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3080/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3080/config.toml");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3080_fehler/3080.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3080/3080_fail.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -333,26 +333,7 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3110_fehler(@TempDir Path tempDir) throws Exception {
-        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
-        
-        Settings settings = new Settings();
-        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3110_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3110_fehler/config.toml");
-        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
-
-        //EhiLogger.getInstance().setTraceFilter(false);
-
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3110_fehler/3110.xtf", settings);
-        assertTrue(valid);
-        
-        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Warning: line 41: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Erfasste Länge <> berechnete Länge"));
-    }
-    
-    @Test
-    public void Cid_3110(@TempDir Path tempDir) throws Exception {
+    public void Cid_3110_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -361,8 +342,26 @@ public class Leitung {
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3110/config.toml");
         settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
 
+        //EhiLogger.getInstance().setTraceFilter(false);
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3110/3110.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3110/3110_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 41: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Erfasste Länge <> berechnete Länge"));
+    }
+    
+    @Test
+    public void Cid_3110_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3110/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3110/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3110/3110_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -371,24 +370,7 @@ public class Leitung {
     }
 
     @Test
-    public void Cid_3120_fehler(@TempDir Path tempDir) throws Exception {
-        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
-        
-        Settings settings = new Settings();
-        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3120_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3120_fehler/config.toml");
-        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
-
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3120_fehler/3120.xtf", settings);
-        assertTrue(valid);
-        
-        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Warning: line 44: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Distanz Knoten zu Auslauf > Toleranzwert"));
-    }
-    
-    @Test
-    public void Cid_3120(@TempDir Path tempDir) throws Exception {
+    public void Cid_3120_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -397,7 +379,24 @@ public class Leitung {
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3120/config.toml");
         settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3120/3120.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3120/3120_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 44: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Distanz Knoten zu Auslauf > Toleranzwert"));
+    }
+    
+    @Test
+    public void Cid_3120_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3120/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3120/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3120/3120_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -406,24 +405,7 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3130_fehler(@TempDir Path tempDir) throws Exception {
-        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
-        
-        Settings settings = new Settings();
-        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3130_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3130_fehler/config.toml");
-        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
-
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3130_fehler/3130.xtf", settings);
-        assertTrue(valid);
-        
-        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Warning: line 44: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Distanz Knoten zu Einlauf > Toleranzwert"));
-    }
-
-    @Test
-    public void Cid_3130(@TempDir Path tempDir) throws Exception {
+    public void Cid_3130_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -432,7 +414,24 @@ public class Leitung {
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3130/config.toml");
         settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3130/3130.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3130/3130_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 44: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Distanz Knoten zu Einlauf > Toleranzwert"));
+    }
+
+    @Test
+    public void Cid_3130_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3130/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3130/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3130/3130_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -441,24 +440,7 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3140_fehler(@TempDir Path tempDir) throws Exception {
-        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
-        
-        Settings settings = new Settings();
-        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3140_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3140_fehler/config.toml");
-        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
-
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3140_fehler/3140.xtf", settings);
-        assertTrue(valid);
-        
-        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Warning: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Die berechnete Leitungslänge ist wesentlich kürzer als die Distanz zwischen den Knoten"));
-    }
-    
-    @Test
-    public void Cid_3140(@TempDir Path tempDir) throws Exception {
+    public void Cid_3140_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -467,7 +449,24 @@ public class Leitung {
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3140/config.toml");
         settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3140/3140.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3140/3140_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Die berechnete Leitungslänge ist wesentlich kürzer als die Distanz zwischen den Knoten"));
+    }
+    
+    @Test
+    public void Cid_3140_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3140/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3140/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3140/3140_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
@@ -476,24 +475,7 @@ public class Leitung {
     }
     
     @Test
-    public void Cid_3150_fehler(@TempDir Path tempDir) throws Exception {
-        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
-        
-        Settings settings = new Settings();
-        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
-        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3150_fehler/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3150_fehler/config.toml");
-        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
-
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3150_fehler/3150.xtf", settings);
-        assertTrue(valid);
-        
-        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
-        assertTrue(content.contains("Warning: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Die berechnete Leitungslänge ist wesentlich grösser als die Distanz zwischen den Knoten"));
-    }
-    
-    @Test
-    public void Cid_3150(@TempDir Path tempDir) throws Exception {
+    public void Cid_3150_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         
         Settings settings = new Settings();
@@ -502,7 +484,24 @@ public class Leitung {
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3150/config.toml");
         settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
 
-        boolean valid = Validator.runValidation(TEST_IN+"leitung/3150/3150.xtf", settings);
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3150/3150_fail.xtf", settings);
+        assertTrue(valid);
+        
+        String content = new String(Files.readAllBytes(Paths.get(logFileName)));
+        assertTrue(content.contains("Warning: line 50: VSADSSMINI_2020_LV95.VSADSSMini.Leitung: tid deg5mQXX20002001: Die berechnete Leitungslänge ist wesentlich grösser als die Distanz zwischen den Knoten"));
+    }
+    
+    @Test
+    public void Cid_3150_ok(@TempDir Path tempDir) throws Exception {
+        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
+        
+        Settings settings = new Settings();
+        settings.setValue(Validator.SETTING_LOGFILE, logFileName);
+        settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3150/");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3150/config.toml");
+        settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
+
+        boolean valid = Validator.runValidation(TEST_IN+"leitung/3150/3150_ok.xtf", settings);
         assertTrue(valid);
         
         String content = new String(Files.readAllBytes(Paths.get(logFileName)));
