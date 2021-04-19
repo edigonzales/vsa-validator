@@ -27,7 +27,7 @@ import ch.interlis.iox_j.validator.Validator;
 
 public class IGSMinIoxPluginTest {
     private TransferDescription td = null;
-    private static final String TEST_IN = "src/test/data/xtf/";
+    private static final String TEST_IN = "src/test/data/IGS_min/";
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -53,7 +53,7 @@ public class IGSMinIoxPluginTest {
             ili2cConfig.addFileEntry(fileEntry);
         }        
         {
-            FileEntry fileEntry = new FileEntry("src/test/data/Validierung_IGS_min.ili", FileEntryKind.ILIMODELFILE);
+            FileEntry fileEntry = new FileEntry(TEST_IN + "Validierung_IGS_min.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
         }
         td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);

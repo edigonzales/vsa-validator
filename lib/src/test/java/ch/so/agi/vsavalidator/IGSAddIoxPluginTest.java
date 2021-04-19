@@ -27,7 +27,7 @@ import ch.interlis.iox_j.validator.Validator;
 
 public class IGSAddIoxPluginTest {
     private TransferDescription td = null;
-    private static final String TEST_IN = "src/test/data/xtf/";
+    private static final String TEST_IN = "src/test/data/IGS_add/";
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -53,7 +53,7 @@ public class IGSAddIoxPluginTest {
             ili2cConfig.addFileEntry(fileEntry);
         }        
         {
-            FileEntry fileEntry = new FileEntry("src/test/data/Validierung_IGS_add.ili", FileEntryKind.ILIMODELFILE);
+            FileEntry fileEntry = new FileEntry(TEST_IN + "Validierung_IGS_add.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
         }
         td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);
@@ -66,7 +66,6 @@ public class IGSAddIoxPluginTest {
         Settings settings = new Settings();
         
         Map<String,Class> newFunctions = new HashMap<String,Class>();
-        //newFunctions.put("IGSFunction.IGS_getYear", IGSGetYearIoxPlugin.class);
         newFunctions.put("IGSFunction.IGS_add", IGSAddIoxPlugin.class);
         settings.setTransientObject(Validator.CONFIG_CUSTOM_FUNCTIONS, newFunctions);
 

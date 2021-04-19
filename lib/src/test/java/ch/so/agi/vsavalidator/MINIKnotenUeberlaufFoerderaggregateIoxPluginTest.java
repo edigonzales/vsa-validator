@@ -27,7 +27,7 @@ import ch.interlis.iox_j.validator.Validator;
 
 public class MINIKnotenUeberlaufFoerderaggregateIoxPluginTest {
     private TransferDescription td = null;
-    private static final String TEST_IN = "src/test/data/xtf/";
+    private static final String TEST_IN = "src/test/data/MINI_Knoten_Ueberlauf_Foerderaggregate/";
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -53,7 +53,7 @@ public class MINIKnotenUeberlaufFoerderaggregateIoxPluginTest {
             ili2cConfig.addFileEntry(fileEntry);
         }        
         {
-            FileEntry fileEntry = new FileEntry("src/test/data/Validierung_MINI_Knoten_Ueberlauf_Foerderaggregate.ili", FileEntryKind.ILIMODELFILE);
+            FileEntry fileEntry = new FileEntry(TEST_IN + "Validierung_MINI_Knoten_Ueberlauf_Foerderaggregate.ili", FileEntryKind.ILIMODELFILE);
             ili2cConfig.addFileEntry(fileEntry);
         }
         td = ch.interlis.ili2c.Ili2c.runCompiler(ili2cConfig);
@@ -80,7 +80,6 @@ public class MINIKnotenUeberlaufFoerderaggregateIoxPluginTest {
             event = reader.read();
             validator.validate(event);
         } while (!(event instanceof EndTransferEvent));
-
     }
 
     @Test
