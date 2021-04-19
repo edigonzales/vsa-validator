@@ -123,7 +123,7 @@ public class Leitung {
         Settings settings = new Settings();
         settings.setValue(Validator.SETTING_LOGFILE, logFileName);
         settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"leitung/3020/");
-        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3020_fehler/config.toml");
+        settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"leitung/3020/config.toml");
         
         boolean valid = Validator.runValidation(TEST_IN+"leitung/3020/3020_fail.xtf", settings);
         assertFalse(valid);
