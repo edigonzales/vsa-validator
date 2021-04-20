@@ -29,5 +29,14 @@ dependencies {
 }
 
 tasks.named('test') {
-    useJUnitPlatform()
+    useJUnitPlatform() {
+        excludeTags 'full'
+    }
+}
+
+task completeTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'complete'
+    }
+    maxHeapSize = '2G'
 }

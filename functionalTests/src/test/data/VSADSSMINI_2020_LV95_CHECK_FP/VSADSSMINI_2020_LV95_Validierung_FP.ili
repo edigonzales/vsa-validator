@@ -1,0 +1,201 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_FP (de)
+AT "https://geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS UNQUALIFIED INTERLIS;
+  IMPORTS Text;
+  IMPORTS Math;
+  IMPORTS UNQUALIFIED IGSFunction;
+  IMPORTS UNQUALIFIED MINIFunction;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+	VIEW v_Knoten
+    	PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Knoten;
+    =
+        ALL OF Knoten;
+                
+        !!@ name = 1020
+        !!@ ilivalid.msg = "Die Bezeichnung '{Bezeichnung}' enthält nicht empfohlene Zeichen (alle ausser [0-9], [A-Z], [.] und [-])."                 
+        MANDATORY CONSTRAINT Text.matches(Bezeichnung, "^[0-9a-zA-Z\\.\\-]*$");
+
+        !!@ name = 2010
+        !!@ ilivalid.msg = "Knoten ohne Auslauf."                 
+         MANDATORY CONSTRAINT 
+            NOT (
+               Funktion != #Be_Entlueftung
+               AND Funktion != #Einleitstelle_gewaesserrelevant
+               AND Funktion != #Einleitstelle_nicht_gewaesserrelevant
+               AND Funktion != #Guellegrube
+               AND Funktion != #seitlicherZugang
+               AND Funktion != #Versickerungsanlage
+               AND Funktion != #abflussloseGrube  !! neu 18.4.2019 sb
+               AND Funktion != #Gelaendemulde  !! neu 18.4.2019 sb
+               AND Funktion != #Guellegrube  !! neu 18.4.2019 sb
+               AND Funktion != #Klaergrube  !! neu 18.4.2019 sb
+            )
+            OR (
+               elementCount(MINI_Knoten_Leitungen_wegfuehrend(THIS)) > 0
+               OR elementCount(MINI_Knoten_Ueberlauf_Foerderaggregate(THIS)) > 0
+            );
+            
+        !!@ name = 2020
+        !!@ ilivalid.msg = "Mit keiner Leitung verbundener Knoten."       
+                  
+        MANDATORY CONSTRAINT elementCount(MINI_Knoten_Leitungen(THIS)) > 0;
+         !!@ name = 2030;
+         !!@ ilivalid.msg = "Nicht als solches attributiertes Sonderbauwerk";
+         MANDATORY CONSTRAINT
+            NOT (
+               elementCount(MINI_Knoten_Leitungen_wegfuehrend(THIS)) > 1
+            )
+            OR (
+               !! Sonderbauwerke
+               Funktion == #Pumpwerk
+               OR Funktion == #Duekeroberhaupt
+               OR Funktion == #Duekerkammer 
+               OR Funktion == #Einleitstelle_gewaesserrelevant
+               OR Funktion == #Messstelle
+               OR Funktion == #Pumpwerk
+               OR Funktion == #Regenbecken_Durchlaufbecken
+               OR Funktion == #Regenbecken_Fangbecken
+               OR Funktion == #Regenbecken_Fangkanal
+               OR Funktion == #Regenbecken_Regenklaerbecken
+               OR Funktion == #Regenbecken_Regenrueckhaltebecken
+               OR Funktion == #Regenbecken_Regenrueckhaltekanal
+               OR Funktion == #Regenbecken_Stauraumkanal
+               OR Funktion == #Regenbecken_Verbundbecken
+               OR Funktion == #Regenueberlauf
+               OR Funktion == #Trennbauwerk
+            );
+
+        !!@ name = 2040
+        !!@ ilivalid.msg = "Kein Ueberlauf_Foerderaggregat erfasst."                 
+         MANDATORY CONSTRAINT
+            NOT (
+               Funktion == #Pumpwerk
+               OR Funktion == #Regenbecken_Durchlaufbecken
+               OR Funktion == #Regenbecken_Regenklaerbecken
+               OR Funktion == #Regenbecken_Verbundbecken
+               OR Funktion == #Regenueberlauf
+            )
+            OR (
+               elementCount(MINI_Knoten_Ueberlauf_Foerderaggregate(THIS)) > 0
+            );
+            
+         !!@ name = 2050;
+         !!@ ilivalid.msg = "Nicht-gewaesserrelevante Einleitstelle mit PAA-Einlauf";
+         MANDATORY CONSTRAINT
+            NOT (
+               Funktion == #Einleitstelle_nicht_gewaesserrelevant
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_zufuehrend(THIS),
+                     "FunktionHierarchisch=PAA.*"
+                  )
+               ) == 0
+            );
+            
+         !!@ name = 2110;
+         !!@ ilivalid.msg = "Knotensohle höher als Leitungssohlen";
+         MANDATORY CONSTRAINT
+            (Sohlenkote <= IGS_min(MINI_Knoten_Leitungen_zufuehrend(THIS),"Kote_nach"))
+            AND (Sohlenkote <= IGS_min(MINI_Knoten_Leitungen_wegfuehrend(THIS),"Kote_von"));
+
+         !!@ name = 2120;
+         !!@ ilivalid.msg = "Auslauf höher als Zulauf";
+         MANDATORY CONSTRAINT
+            NOT (
+               Funktion != #Pumpwerk
+               AND Funktion != #Schlammsammler
+               AND Funktion != #Duekerkammer  !! neu 18.4.2019 sb
+            )
+            OR (
+               IGS_min(MINI_Knoten_Leitungen_zufuehrend(THIS),"Kote_nach") >=
+               IGS_min(MINI_Knoten_Leitungen_wegfuehrend(THIS),"Kote_von")
+            );
+
+         !!@ name = 2130_01;
+         !!@ ilivalid.msg = "Verschmutztes Abwasser in Einleitstelle";
+         MANDATORY CONSTRAINT
+            NOT (
+               Funktion == #Einleitstelle_gewaesserrelevant
+               OR Funktion == #Einleitstelle_nicht_gewaesserrelevant
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_zufuehrend(THIS),
+                     "Nutzungsart_Ist=Mischabwasser,Schmutzabwasser,Industrieabwasser"
+                  )
+               ) == 0
+            );
+
+         !!@ name = 2130_02;
+         !!@ ilivalid.msg = "Verschmutztes Abwasser in Einleitstelle";
+         MANDATORY CONSTRAINT
+            NOT (
+               Funktion == #Einleitstelle_gewaesserrelevant
+               OR Funktion == #Einleitstelle_nicht_gewaesserrelevant
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_zufuehrend(THIS),
+                     "Nutzungsart_geplant=Mischabwasser,Schmutzabwasser,Industrieabwasser"
+                  )
+               ) == 0
+            );
+            
+         !! TODO 2130_01 / _02 (wegen Status)   
+            
+         !!@ name = 2160;
+         !!@ ilivalid.msg = "SAA-Knoten an PAA-Leitung";
+         MANDATORY CONSTRAINT
+            NOT (
+               FunktionHierarchisch == #SAA
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_zufuehrend(THIS),
+                     "FunktionHierarchisch=PAA.*"
+                  )
+               ) == 0
+               AND elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(THIS),
+                     "FunktionHierarchisch=PAA.*"
+                  )
+               ) == 0
+            );
+
+        !!@ name = 9101
+        !!@ ilivalid.msg = "Baujahr ist nicht plausibel"                 
+         MANDATORY CONSTRAINT 
+            (Baujahr >= 1800)
+            AND (Baujahr <= IGS_add(IGS_getYear(UNDEFINED),20));
+
+        !!@ name = 9102
+        !!@ ilivalid.msg = "Deckelkote ist nicht plausibel"                 
+         MANDATORY CONSTRAINT 
+            (Deckelkote >= 190.0)
+            AND (Deckelkote <= 2500.0);
+
+        !!@ name = 9103
+        !!@ ilivalid.msg = "Sohlenkote ist nicht plausibel"                 
+         MANDATORY CONSTRAINT 
+            (Sohlenkote >= 190.0)
+            AND (Sohlenkote <= 2500.0);
+
+    END v_Knoten;
+        
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_FP.
