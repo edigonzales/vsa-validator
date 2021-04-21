@@ -31,4 +31,10 @@ check="warning"
 ["VSADSSMINI_2020_LV95_Validierung_FP.VSADSSMini_Validierung.v_Knoten.9103"]
 check="warning"
 
+["VSADSSMINI_2020_LV95_Validierung_FP.VSADSSMini_Validierung.v_Leitung.1020"]
+check="warning"
+
+["VSADSSMINI_2020_LV95_Validierung_FP.VSADSSMini_Validierung.v_Leitung.3080"]
+check="warning"
+
 

@@ -176,25 +176,113 @@ VERSION "2020-11-12"  =
                ) == 0
             );
 
-        !!@ name = 9101
-        !!@ ilivalid.msg = "Baujahr ist nicht plausibel"                 
+         !!@ name = 9101
+         !!@ ilivalid.msg = "Baujahr ist nicht plausibel"                 
          MANDATORY CONSTRAINT 
             (Baujahr >= 1800)
             AND (Baujahr <= IGS_add(IGS_getYear(UNDEFINED),20));
 
-        !!@ name = 9102
-        !!@ ilivalid.msg = "Deckelkote ist nicht plausibel"                 
+         !!@ name = 9102
+         !!@ ilivalid.msg = "Deckelkote ist nicht plausibel"                 
          MANDATORY CONSTRAINT 
             (Deckelkote >= 190.0)
             AND (Deckelkote <= 2500.0);
 
-        !!@ name = 9103
-        !!@ ilivalid.msg = "Sohlenkote ist nicht plausibel"                 
+         !!@ name = 9103
+         !!@ ilivalid.msg = "Sohlenkote ist nicht plausibel"                 
          MANDATORY CONSTRAINT 
             (Sohlenkote >= 190.0)
             AND (Sohlenkote <= 2500.0);
 
     END v_Knoten;
+        
+    VIEW v_Leitung
+        PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Leitung;
+    =
+        ALL OF Leitung;
+                
+         !!@ name = 1020
+         !!@ ilivalid.msg = "Die Bezeichnung '{Bezeichnung}' enthält nicht empfohlene Zeichen (alle ausser [0-9], [A-Z], [.] und [-])."                 
+         MANDATORY CONSTRAINT Text.matches(Bezeichnung, "^[0-9a-zA-Z\\.\\-]*$");
+
+         !!@ name = 3010
+         !!@ ilivalid.msg = "Fehlender Knoten_von (PAA)"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               isEnumSubVal(FunktionHierarchisch,#PAA)
+            )
+            OR (
+               DEFINED(Knoten_vonRef)
+            );
+
+         !!@ name = 3020
+         !!@ ilivalid.msg = "Fehlender Knoten_nach (PAA)"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               isEnumSubVal(FunktionHierarchisch,#PAA)
+            )
+            OR (
+               DEFINED(Knoten_nachRef)
+            );
+
+         !!@ name = 3030
+         !!@ ilivalid.msg = "Leitung_nach erfasst bei PAA"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               isEnumSubVal(FunktionHierarchisch,#PAA)
+            )
+            OR (
+               NOT(DEFINED(Leitung_nachRef))
+            );
+
+        !!@ name = 3040
+        !!@ ilivalid.msg = "PAA-Leitung oberhalb von SAA-Leitung"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               isEnumSubVal(FunktionHierarchisch,#SAA)
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_zufuehrend(Knoten_vonRef),
+                     "FunktionHierarchisch=PAA.*"
+                  )
+               ) == 0
+            );
+
+        !!@ name = 3050_01
+        !!@ ilivalid.msg = "Knoten_nach und Leitung_nach erfasst"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               DEFINED(Knoten_nachRef)
+            )
+            OR (
+               NOT(DEFINED(Leitung_nachRef))
+            );
+                
+        !!@ name = 3050_02
+        !!@ ilivalid.msg = "Knoten_nach und Leitung_nach erfasst"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               DEFINED(Leitung_nachRef)
+            )
+            OR (
+               NOT(DEFINED(Knoten_nachRef))
+            );
+
+        !!@ name = 3070
+        !!@ ilivalid.msg = "Start- und Endknoten identisch"                 
+         MANDATORY CONSTRAINT
+            NOT (Knoten_vonRef == Knoten_nachRef);
+
+        !!@ name = 3080
+        !!@ ilivalid.msg = "Parallelleitung vorhanden"                 
+         UNIQUE 
+            Knoten_vonRef,Knoten_nachRef;
+
+
+    END v_Leitung;
+
         
   END VSADSSMini_Validierung;
 
