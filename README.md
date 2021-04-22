@@ -1,6 +1,8 @@
 # vsa-validator
 
 ## Todo
+- IGSFunction.IGS_xxxxx() -> SOGISFunction.xxxxx() 
+- SOGISFunction: separates Repo
 - IGS_filter Implementierung (in "Gut")
 - IGS_getLength / getArea / getDistance2 / isInsideSurface mit GeoemtryUtils mit allen möglichen Varianten.
 - Versionen der Libs abstimmen. Am Ende des Tages muss es mit ilivalidator funktionieren.
@@ -23,6 +25,6 @@
 
 
 ## Resultierende ilivalidator-Bugs
-- https://github.com/claeis/ilivalidator/issues/300
+- https://github.com/claeis/ilivalidator/issues/300 -> Im Validierungs-Ili fehlen diese Constraints
 - https://github.com/claeis/ilivalidator/issues/301 (workaround vorhanden)
 - https://github.com/claeis/ilivalidator/issues/304 (Workaround vorhanden)

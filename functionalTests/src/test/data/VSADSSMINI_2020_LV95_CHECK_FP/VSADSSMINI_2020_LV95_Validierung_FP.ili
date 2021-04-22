@@ -279,10 +279,814 @@ VERSION "2020-11-12"  =
         !!@ ilivalid.msg = "Parallelleitung vorhanden"                 
          UNIQUE 
             Knoten_vonRef,Knoten_nachRef;
+        !!@ name = 3110
+        !!@ ilivalid.msg = "Erfasste Länge <> berechnete Länge"                 
+         MANDATORY CONSTRAINT 
+            IGS_abs(
+               IGS_sub(
+                  LaengeEffektiv,
+                  IGS_sqrt(
+                     IGS_add(
+                        IGS_pow(IGS_getLength(THIS, "Verlauf"),2),
+                        IGS_abs(IGS_pow(IGS_sub(Kote_nach,Kote_von),2))
+                     )
+                  )
+               )
+            ) <= 0.1;
 
+        !!@ name = 3120
+        !!@ ilivalid.msg = "Distanz Knoten zu Auslauf > Toleranzwert"                 
+         MANDATORY CONSTRAINT
+            IGS_getDistance(
+               Knoten_vonRef->Lage,
+               IGS_getFirstPoint(Verlauf)
+            ) <= 5.0;
+
+        !!@ name = 3130
+        !!@ ilivalid.msg = "Distanz Knoten zu Einlauf > Toleranzwert"                 
+         MANDATORY CONSTRAINT
+            IGS_getDistance(
+               Knoten_nachRef->Lage,
+               IGS_getLastPoint(Verlauf)
+            ) <= 5.0;
+
+        !!@ name = 3140
+        !!@ ilivalid.msg = "Die berechnete Leitungslänge ist wesentlich kürzer als die Distanz zwischen den Knoten"                 
+         MANDATORY CONSTRAINT
+            IGS_sub(
+               IGS_getLength(THIS, "Verlauf"),
+               IGS_getDistance(
+                  Knoten_nachRef->Lage,
+                  Knoten_vonRef->Lage
+               )
+            )
+            >= -5.0;
+
+        !!@ name = 3150
+        !!@ ilivalid.msg = "Die berechnete Leitungslänge ist wesentlich grösser als die Distanz zwischen den Knoten"                 
+         MANDATORY CONSTRAINT
+            IGS_div(
+               IGS_sqrt(
+                  IGS_add(
+                     IGS_pow(IGS_getLength(THIS, "Verlauf"),2),
+                     IGS_abs(IGS_pow(IGS_sub(Kote_nach,Kote_von),2))
+                  )
+               ),
+               IGS_getDistance(
+                  Knoten_nachRef->Lage,
+                  Knoten_vonRef->Lage
+               )
+            ) <= 1.2;
+
+        !!@ name = 3210
+        !!@ ilivalid.msg = "PAA mit kleiner Nennweite"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               isEnumSubVal(FunktionHierarchisch,#PAA)
+            )
+            OR (
+               Lichte_Hoehe >= 150.0
+            );
+
+        !!@ name = 3220
+        !!@ ilivalid.msg = "Gegengefälle in Freispiegelleitung"                 
+         MANDATORY CONSTRAINT 
+            NOT (
+               Kote_von < Kote_nach
+            )
+            OR (
+               FunktionHydraulisch == #Pumpendruckleitung
+               OR FunktionHydraulisch == #Vakuumleitung
+            );
+
+        !!@ name = 3230
+        !!@ ilivalid.msg = "Gefälle in Pumpenleitung"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               FunktionHydraulisch == #Pumpendruckleitung
+               OR FunktionHydraulisch == #Vakuumleitung
+            )
+            OR (
+               Kote_von <= Kote_nach
+            );
+
+        !!@ name = 3240
+        !!@ ilivalid.msg = "Grosskalibrige SAA"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               isEnumSubVal(FunktionHierarchisch,#SAA)
+            )
+            OR (
+               Lichte_Hoehe <= 300.0
+            );
+
+        !!@ name = 3250
+        !!@ ilivalid.msg = "Kreisprofil ist nicht gleich breit wie hoch"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               Profiltyp == #Kreisprofil
+            )
+            OR (
+               Lichte_Hoehe == Lichte_Breite
+            );
+
+        !!@ name = 3260
+        !!@ ilivalid.msg = "Eiprofil ist breiter als hoch"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               Profiltyp == #Eiprofil
+            )
+            OR (
+               Lichte_Hoehe > Lichte_Breite
+            );
+
+        !!@ name = 3270
+        !!@ ilivalid.msg = "Höhe zu Breite entspricht nicht Normeiprofil" 
+         MANDATORY CONSTRAINT
+            NOT (
+               Profiltyp == #Eiprofil
+            )
+            OR (
+               IGS_abs(
+                  IGS_sub(
+                     IGS_div(Lichte_Hoehe,Lichte_Breite),
+                     1.5
+                  )
+               ) < 0.001
+            );
+
+        !!@ name = 3310
+        !!@ ilivalid.msg = "Drainageleitung führt nicht nur Reinabwasser" 
+         MANDATORY CONSTRAINT
+            NOT (
+               FunktionHydraulisch == #Drainagetransportleitung
+               OR FunktionHydraulisch == #Sickerleitung
+            )
+            OR (
+               Nutzungsart_Ist == #Reinabwasser
+            );
+
+        !!@ name = 3320
+        !!@ ilivalid.msg = "Strassenentwässerung führt nicht Regen- oder Mischabwasser" 
+         MANDATORY CONSTRAINT   
+            NOT (
+               FunktionHierarchisch == #PAA.Strassenentwaesserung
+               OR FunktionHierarchisch == #SAA.Strassenentwaesserung
+            )
+            OR (
+               Nutzungsart_Ist != #Bachwasser
+               AND Nutzungsart_Ist != #entlastetes_Mischabwasser
+               AND Nutzungsart_Ist != #Industrieabwasser
+               AND Nutzungsart_Ist != #Reinabwasser
+               AND Nutzungsart_Ist != #Schmutzabwasser
+               AND Nutzungsart_Ist != #andere !! neu 18.4.2019 sb
+               AND Nutzungsart_Ist != #unbekannt !! neu 18.4.2019 sb
+            );
+
+        !!@ name = 3330
+        !!@ ilivalid.msg = "In Betrieb stehende Leitung mündet in nicht in Betrieb stehende Leitung" 
+         MANDATORY CONSTRAINT   
+            NOT (
+               isEnumSubVal(Status,#in_Betrieb)
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_nachRef),
+                     "Status=in_Betrieb*"
+                  )
+               ) >= 1
+               OR elementCount(
+                  MINI_Knoten_Leitungen_wegfuehrend(Knoten_nachRef)
+               ) == 0
+            );
+
+        !!@ name = 3340
+        !!@ ilivalid.msg = "Leitung mit verschmutztem Abwasser mündet in Leitung mit unverschmutztem Abwasser (Ist-Zustand)" 
+         MANDATORY CONSTRAINT   
+            NOT (
+               Nutzungsart_Ist == #Industrieabwasser
+               OR Nutzungsart_Ist == #Mischabwasser
+               OR Nutzungsart_Ist == #Schmutzabwasser
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_nachRef),
+                     "Nutzungsart_Ist=Bachwasser,entlastetes_Mischabwasser,Niederschlagsabwasser,Reinabwasser,unbekannt"
+                  )
+               ) == 0
+            );
+
+        !!@ name = 3341
+        !!@ ilivalid.msg = "Leitung mit verschmutztem Abwasser mündet in Leitung mit unverschmutztem Abwasser (Planungszustand)" 
+         MANDATORY CONSTRAINT   
+            NOT (
+               Nutzungsart_geplant == #Industrieabwasser
+               OR Nutzungsart_geplant == #Mischabwasser
+               OR Nutzungsart_geplant == #Schmutzabwasser
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_nachRef),
+                     "Nutzungsart_geplant=Bachwasser,entlastetes_Mischabwasser,Niederschlagsabwasser,Reinabwasser,unbekannt"
+                  )
+               ) == 0
+            );
+
+        !!@ name = 3350
+        !!@ ilivalid.msg = "Leitung mit Niederschlagsabwasser mündet in Leitung ohne Niederschlagsabwasser (Ist-Zustand)" 
+         MANDATORY CONSTRAINT   
+            NOT (
+               Nutzungsart_Ist == #Bachwasser
+               OR Nutzungsart_Ist == #entlastetes_Mischabwasser
+               OR Nutzungsart_Ist == #Mischabwasser
+               OR Nutzungsart_Ist == #Niederschlagsabwasser
+               OR Nutzungsart_Ist == #Reinabwasser
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_nachRef),
+                     "Nutzungsart_Ist=Industrieabwasser,Schmutzabwasser"
+                  )
+               ) == 0
+           );
+
+        !!@ name = 3351
+        !!@ ilivalid.msg = "Leitung mit Niederschlagsabwasser mündet in Leitung ohne Niederschlagsabwasser (Planungszustand)" 
+         MANDATORY CONSTRAINT   
+            NOT (
+               Nutzungsart_geplant == #Bachwasser
+               OR Nutzungsart_geplant == #entlastetes_Mischabwasser
+               OR Nutzungsart_geplant == #Mischabwasser
+               OR Nutzungsart_geplant == #Niederschlagsabwasser
+               OR Nutzungsart_geplant == #Reinabwasser
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_nachRef),
+                     "Nutzungsart_geplant=Industrieabwasser,Schmutzabwasser"
+                  )
+               ) == 0
+           );
+
+        !!@ name = 9101
+        !!@ ilivalid.msg = "Baujahr ist nicht plausibel" 
+         MANDATORY CONSTRAINT 
+            (Baujahr >= 1800)
+            AND (Baujahr <= (IGS_add(IGS_getYear(UNDEFINED),20)));
+
+        !!@ name = 9102_01
+        !!@ ilivalid.msg = "Kote_von ist nicht plausibel" 
+         MANDATORY CONSTRAINT 
+            (Kote_von >= 190.0)
+            AND (Kote_von <= 2500.0);
+
+        !!@ name = 9102_02
+        !!@ ilivalid.msg = "Kote_nach ist nicht plausibel" 
+         MANDATORY CONSTRAINT 
+            (Kote_nach >= 190.0)
+            AND (Kote_nach <= 2500.0);
+
+        !!@ name = 9104
+        !!@ ilivalid.msg = "LaengeEffektiv ist nicht plausibel" 
+         MANDATORY CONSTRAINT 
+            (LaengeEffektiv >= 1.0)
+            AND (LaengeEffektiv <= 200.0);
+
+        !!@ name = 9105_01
+        !!@ ilivalid.msg = "Lichte_Breite ist nicht plausibel" 
+         MANDATORY CONSTRAINT 
+            (Lichte_Breite >= 50.0)
+            AND (Lichte_Breite <= 4000.0);
+
+        !!@ name = 9105_02
+        !!@ ilivalid.msg = "Lichte_Hoehe ist nicht plausibel" 
+         MANDATORY CONSTRAINT 
+            (Lichte_Hoehe >= 50.0)
+            AND (Lichte_Hoehe <= 4000.0);
+
+        !!@ name = 9106
+        !!@ ilivalid.msg = "WBW_Basisjahr ist nicht plausibel" 
+         MANDATORY CONSTRAINT 
+            WBW_Basisjahr >= 1970
+            AND WBW_Basisjahr <= IGS_getYear(UNDEFINED);
+
+        !!@ name = 9107
+        !!@ ilivalid.msg = "Wiederbeschaffungswert ist nicht plausibel" 
+         MANDATORY CONSTRAINT 
+            (Wiederbeschaffungswert >= 500.0)
+            AND (Wiederbeschaffungswert <= 500000.0);
 
     END v_Leitung;
 
+    VIEW v_Teileinzugsgebiet
+        PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet;
+    =
+        ALL OF Teileinzugsgebiet;
+                
+        !!@ name = 1020
+        !!@ ilivalid.msg = "Die Bezeichnung '{Bezeichnung}' enthält nicht empfohlene Zeichen (alle ausser [0-9], [A-Z], [.] und [-])."                 
+        MANDATORY CONSTRAINT Text.matches(Bezeichnung, "^[0-9a-zA-Z\\.\\-]*$");
+
+        !!@ name = 4010
+        !!@ ilivalid.msg = "Anschluss an SAA (SW Ist)"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               Knoten_SW_IstRef->Funktion != #Einleitstelle_gewaesserrelevant
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_SW_IstRef),
+                          "FunktionHierarchisch=PAA.*;Status=ausser_Betrieb,weitere.Berechnungsvariante,weitere.geplant,in_Betrieb,weitere.Projekt,in_Betrieb.provisorisch,unbekannt"
+                  )
+               ) > 0
+            );
+
+        !!@ name = 4011
+        !!@ ilivalid.msg = "Anschluss an SAA (RW Ist)"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               Knoten_RW_IstRef->Funktion != #Einleitstelle_gewaesserrelevant
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_RW_IstRef),
+                     "FunktionHierarchisch=PAA.*;Status=ausser_Betrieb,weitere.Berechnungsvariante,weitere.geplant,in_Betrieb,weitere.Projekt,in_Betrieb.provisorisch,unbekannt"
+                  )
+               ) > 0
+            );
+
+        !!@ name = 4012
+        !!@ ilivalid.msg = "Anschluss an SAA (SW_geplant)"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               Knoten_SW_geplantRef->Funktion != #Einleitstelle_gewaesserrelevant
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_SW_geplantRef),
+                     "FunktionHierarchisch=PAA.*;Status=ausser_Betrieb,weitere.Berechnungsvariante,weitere.geplant,in_Betrieb,weitere.Projekt,in_Betrieb.provisorisch,unbekannt"
+                  )
+               ) > 0
+            );
+
+        !!@ name = 4013
+        !!@ ilivalid.msg = "Anschluss an SAA (RW_geplant)"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               Knoten_RW_geplantRef->Funktion != #Einleitstelle_gewaesserrelevant
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_RW_geplantRef),
+                     "FunktionHierarchisch=PAA.*;Status=ausser_Betrieb,weitere.Berechnungsvariante,weitere.geplant,in_Betrieb,weitere.Projekt,in_Betrieb.provisorisch,unbekannt"
+                  )
+               ) > 0
+            );
+
+        !!@ name = 4020
+        !!@ ilivalid.msg = "Anschluss an eine nicht in Betrieb stehende Leitung (Ist-Zustand)"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               DEFINED(Knoten_SW_IstRef)
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_SW_IstRef),
+                     "Status=in_Betrieb,in_Betrieb.provisorisch,unbekannt"  !! 18.4.2019 sb in_Betrieb.wird_aufgehoben hier ausschliessen und wie tot und weitere behandeln.
+                  )
+               ) >= 1
+            );
+
+        !!@ name = 4020
+        !!@ ilivalid.msg = "Anschluss an eine nicht in Betrieb stehende Leitung (Ist-Zustand)"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               DEFINED(Knoten_RW_IstRef)
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_RW_IstRef),
+                     "Status=in_Betrieb,in_Betrieb.provisorisch,unbekannt"  !! 18.4.2019 sb in_Betrieb.wird_aufgehoben hier ausschliessen und wie tot und weitere behandeln.
+                  )
+               ) >= 1
+            );
+
+        !!@ name = 4021_01
+        !!@ ilivalid.msg = "Anschluss an eine nicht in Betrieb stehende Leitung (Planungszustand)"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               DEFINED(Knoten_SW_geplantRef)
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_SW_geplantRef),
+                     "Status=in_Betrieb*,unbekannt"
+                  )
+               ) >= 1
+            );
+
+        !!@ name = 4021_02
+        !!@ ilivalid.msg = "Anschluss an eine nicht in Betrieb stehende Leitung (Planungszustand)"                 
+         MANDATORY CONSTRAINT   
+            NOT (
+               DEFINED(Knoten_RW_geplantRef)
+            )
+            OR (
+               elementCount(
+                  IGS_filter(
+                     MINI_Knoten_Leitungen_wegfuehrend(Knoten_RW_geplantRef),
+                     "Status=in_Betrieb*,unbekannt"
+                  )
+               ) >= 1
+            );
+
+        !!@ name = 4110
+        !!@ ilivalid.msg = "Fehlender Anschlussknoten (SW_Ist)"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_Ist == #Mischsystem
+            )
+            OR (
+               DEFINED(Knoten_SW_IstRef)
+            );
+
+        !!@ name = 4115
+        !!@ ilivalid.msg = "Überflüssiger Anschlussknoten (RW_Ist)"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_Ist == #Mischsystem
+            )
+            OR (
+               NOT(DEFINED(Knoten_RW_IstRef))
+            );
+
+        !!@ name = 4120
+        !!@ ilivalid.msg = "Fehlender Anschlussknoten (SW_Ist)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_Ist == #ModifiziertesSystem
+            )
+            OR (
+               DEFINED(Knoten_SW_IstRef)
+            );
+
+        !!@ name = 4125
+        !!@ ilivalid.msg = "Überflüssiger Anschlussknoten (SW_Ist)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_Ist == #ModifiziertesSystem
+            )
+            OR (
+               NOT(DEFINED(Knoten_SW_IstRef))
+            );
+
+        !!@ name = 4130
+        !!@ ilivalid.msg = "Überflüssiger Anschlussknoten (RW_Ist)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_Ist == #nicht_angeschlossen
+               OR Entwaesserungssystem_Ist == #nicht_entwaessert
+            )
+            OR (
+               NOT(DEFINED(Knoten_RW_IstRef))
+            );
+
+        !!@ name = 4135
+        !!@ ilivalid.msg = "Fehlender Anschlussknoten (SW_Ist oder RW_Ist)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_Ist == #Trennsystem
+            )
+            OR (
+               DEFINED(Knoten_SW_IstRef)
+               OR DEFINED(Knoten_RW_IstRef)
+            );
+
+        !!@ name = 4140
+        !!@ ilivalid.msg = "Fehlender Anschlussknoten (SW_geplant)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_geplant == #Mischsystem
+            )
+            OR (
+               DEFINED(Knoten_SW_geplantRef)
+            );
+
+        !!@ name = 4145
+        !!@ ilivalid.msg = "Fehlender Anschlussknoten (RW_geplant)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_geplant == #Mischsystem
+            )
+            OR (
+               NOT(DEFINED(Knoten_RW_geplantRef))
+            );
+
+        !!@ name = 4150
+        !!@ ilivalid.msg = "Fehlender Anschlussknoten (SW_geplant)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_geplant == #ModifiziertesSystem
+            )
+            OR (
+               DEFINED(Knoten_SW_geplantRef)
+            );
+
+        !!@ name = 4155
+        !!@ ilivalid.msg = "Überflüssiger Anschlussknoten (SW_geplant)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_geplant == #nicht_angeschlossen
+               OR Entwaesserungssystem_geplant == #nicht_entwaessert
+            )
+            OR (
+               NOT(DEFINED(Knoten_SW_geplantRef))
+            );
+
+        !!@ name = 4160
+        !!@ ilivalid.msg = "Überflüssiger Anschlussknoten (RW_geplant)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_geplant == #nicht_angeschlossen
+               OR Entwaesserungssystem_geplant == #nicht_entwaessert
+            )
+            OR (
+               NOT(DEFINED(Knoten_RW_geplantRef))
+            );
+
+        !!@ name = 4165
+        !!@ ilivalid.msg = "Fehlender Anschlussknoten (SW_geplant oder RW_geplant)"
+         MANDATORY CONSTRAINT
+            NOT (
+               Entwaesserungssystem_geplant == #Trennsystem
+            )
+            OR (
+               DEFINED(Knoten_SW_geplantRef)
+               OR DEFINED(Knoten_RW_geplantRef)
+            );
+
+        !!@ name = 4210
+        !!@ ilivalid.msg = "Schmutzabwasserparameter ohne Anschlussknoten (Ist-Zustand)"
+         MANDATORY CONSTRAINT
+            NOT (     
+               DEFINED(Schmutzabwasseranfall_Ist)
+               OR DEFINED(Einwohnerdichte_Ist)
+               OR DEFINED(Fremdwasseranfall_Ist)
+               OR DEFINED(Abflussbeiwert_SW_Ist)
+               OR DEFINED(Befestigungsgrad_SW_Ist)
+            )
+            OR (
+               DEFINED(Knoten_SW_IstRef)
+            );
+
+        !!@ name = 4211
+        !!@ ilivalid.msg = "Schmutzabwasserparameter ohne Anschlussknoten (Planungszustand)"
+         MANDATORY CONSTRAINT
+            NOT (     
+               DEFINED(Schmutzabwasseranfall_Ist)
+               OR DEFINED(Einwohnerdichte_Ist)
+               OR DEFINED(Fremdwasseranfall_Ist)
+               OR DEFINED(Abflussbeiwert_SW_Ist)
+               OR DEFINED(Befestigungsgrad_SW_Ist)
+            )
+            OR (
+               DEFINED(Knoten_SW_geplantRef)
+            );
+
+        !!@ name = 4221
+        !!@ ilivalid.msg = "Regenabwasserparameter ohne Anschlussknoten (Planungszustand)"
+         MANDATORY CONSTRAINT 
+            NOT (
+               DEFINED(Abflussbeiwert_RW_geplant)
+               OR DEFINED(Befestigungsgrad_RW_geplant)
+            )
+            OR (
+               DEFINED(Knoten_RW_geplantRef)
+            );                    
+
+        !!@ name = 4230
+        !!@ ilivalid.msg = "Summe Abflussbeiwerte >100 (Ist-Zustand)"
+         MANDATORY CONSTRAINT 
+            IGS_add(Abflussbeiwert_SW_Ist,Abflussbeiwert_RW_Ist) <= 100;
+
+        !!@ name = 4230
+        !!@ ilivalid.msg = "Summe Abflussbeiwerte >100 (Planungszustand)"
+         MANDATORY CONSTRAINT 
+            IGS_add(Abflussbeiwert_SW_geplant,Abflussbeiwert_RW_geplant) <= 100;
+
+        !!@ name = 4240
+        !!@ ilivalid.msg = "Summe Befestigungsgrade >100 (Ist-Zustand)"
+         MANDATORY CONSTRAINT 
+            IGS_add(Befestigungsgrad_SW_Ist,Befestigungsgrad_RW_Ist) <= 100;
+
+        !!@ name = 4241
+        !!@ ilivalid.msg = "Summe Befestigungsgrade >100 (Planungszustand)"
+         MANDATORY CONSTRAINT 
+            IGS_add(Befestigungsgrad_SW_geplant,Befestigungsgrad_RW_geplant) <= 100;
+
+        !!@ name = 4310
+        !!@ ilivalid.msg = "Differenz von erfasster zu berechneter Fläche"
+         MANDATORY CONSTRAINT 
+            IGS_abs(
+               IGS_sub(
+                  IGS_div(IGS_getArea(THIS, "Perimeter"),10000.0),
+                  Flaeche
+               )
+            ) <= 0.001;
+
+        !!@ name = 4320
+        !!@ ilivalid.msg = "Überlappendes Teileinzugsgebiet"
+        SET CONSTRAINT INTERLIS.areAreas(ALL, UNDEFINED, >> Perimeter);
+
+        !!@ name = 4330_01
+        !!@ ilivalid.msg = "Grosse Distanz zum Anschlussknoten (SW_Ist)"
+         MANDATORY CONSTRAINT
+            IGS_getDistance2(
+                Knoten_SW_IstRef->THIS, "Lage",
+                THIS, "Perimeter"
+            ) < 200.0;
+
+        !!@ name = 4330_02
+        !!@ ilivalid.msg = "Grosse Distanz zum Anschlussknoten (RW_Ist)"
+         MANDATORY CONSTRAINT
+            IGS_getDistance2(
+                Knoten_RW_IstRef->THIS, "Lage",
+                THIS, "Perimeter"
+            ) < 200.0;
+
+        !!@ name = 4330_03
+        !!@ ilivalid.msg = "Grosse Distanz zum Anschlussknoten (SW_geplant)"
+         MANDATORY CONSTRAINT
+            IGS_getDistance2(
+                Knoten_SW_geplantRef->THIS, "Lage",
+                THIS, "Perimeter"
+            ) < 200.0;
+
+        !!@ name = 4330_04
+        !!@ ilivalid.msg = "Grosse Distanz zum Anschlussknoten (RW_geplant)"
+         MANDATORY CONSTRAINT
+            IGS_getDistance2(
+                Knoten_RW_geplantRef->THIS, "Lage",
+                THIS, "Perimeter"
+            ) < 200.0;
+
+        !!@ name = 4340
+        !!@ ilivalid.msg = "Beschriftung ausserhalb Teileinzugsgebiet"
+         MANDATORY CONSTRAINT IGS_isInsideSurface(
+            THIS, "Perimeter",
+            THIS, "TextPos"
+         );
+
+        !!@ name = 9201_01
+        !!@ ilivalid.msg = "Abflussbegrenzung_geplant ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Abflussbegrenzung_geplant >= 10.0)
+            AND (Abflussbegrenzung_geplant <= 300.0);
+
+        !!@ name = 9201_02
+        !!@ ilivalid.msg = "Abflussbegrenzung_Ist ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Abflussbegrenzung_Ist >= 10.0)
+            AND (Abflussbegrenzung_Ist <= 300.0);
+
+        !!@ name = 9202_01
+        !!@ ilivalid.msg = "Abflussbeiwert_RW_geplant ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Abflussbeiwert_RW_geplant >= 0.0)
+            AND (Abflussbeiwert_RW_geplant <= 90.0);
+
+        !!@ name = 9202_02
+        !!@ ilivalid.msg = "Abflussbeiwert_RW_Ist ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Abflussbeiwert_RW_Ist >= 0.0)
+            AND (Abflussbeiwert_RW_Ist <= 90.0);
+
+        !!@ name = 9202_03
+        !!@ ilivalid.msg = "Abflussbeiwert_SW_geplant ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Abflussbeiwert_SW_geplant >= 0.0)
+            AND (Abflussbeiwert_SW_geplant <= 90.0);
+
+        !!@ name = 9202_04
+        !!@ ilivalid.msg = "Abflussbeiwert_SW_Ist ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Abflussbeiwert_SW_Ist >= 0.0)
+            AND (Abflussbeiwert_SW_Ist <= 90.0);
+
+        !!@ name = 9203_01
+        !!@ ilivalid.msg = "Befestigungsgrad_RW_geplant ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Befestigungsgrad_RW_geplant >= 0.0)
+            AND (Befestigungsgrad_RW_geplant <= 100.0);
+
+        !!@ name = 9203_02
+        !!@ ilivalid.msg = "Befestigungsgrad_RW_Ist ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Befestigungsgrad_RW_Ist >= 0.0)
+            AND (Befestigungsgrad_RW_Ist <= 100.0);
+
+        !!@ name = 9203_03
+        !!@ ilivalid.msg = "Befestigungsgrad_SW_geplant ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Befestigungsgrad_SW_geplant >= 0.0)
+            AND (Befestigungsgrad_SW_geplant <= 100.0);
+
+        !!@ name = 9203_04
+        !!@ ilivalid.msg = "Befestigungsgrad_SW_Ist ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Befestigungsgrad_SW_Ist >= 0.0)
+            AND (Befestigungsgrad_SW_Ist <= 100.0);
+
+        !!@ name = 9204_01
+        !!@ ilivalid.msg = "Einwohnerdichte_geplant ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Einwohnerdichte_geplant >= 0.0)
+            AND (Einwohnerdichte_geplant <= 1000.0);
+
+        !!@ name = 9204_02
+        !!@ ilivalid.msg = "Einwohnerdichte_Ist ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Einwohnerdichte_Ist >= 0.0)
+            AND (Einwohnerdichte_Ist <= 1000.0);
+
+        !!@ name = 9205
+        !!@ ilivalid.msg = "Flaeche ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Flaeche >= 0.0)
+            AND (Flaeche <= 5.0);
+
+        !!@ name = 9206_01
+        !!@ ilivalid.msg = "Fremdwasseranfall_geplant ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Fremdwasseranfall_geplant >= 0.0)
+            AND (Fremdwasseranfall_geplant <= 100.0);
+
+        !!@ name = 9206_02
+        !!@ ilivalid.msg = "Fremdwasseranfall_Ist ist nicht plausibel"
+         MANDATORY CONSTRAINT 
+            (Fremdwasseranfall_Ist >= 0.0)
+            AND (Fremdwasseranfall_Ist <= 100.0);
+
+    END v_Teileinzugsgebiet;
+
+    VIEW v_Ueberlauf_Foerderaggregat
+        PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Ueberlauf_Foerderaggregat;
+    =
+        ALL OF Ueberlauf_Foerderaggregat;
+                
+        !!@ name = 1020
+        !!@ ilivalid.msg = "Die Bezeichnung '{Bezeichnung}' enthält nicht empfohlene Zeichen (alle ausser [0-9], [A-Z], [.] und [-])."                 
+        MANDATORY CONSTRAINT Text.matches(Bezeichnung, "^[0-9a-zA-Z\\.\\-]*$");
+ 
+    END v_Ueberlauf_Foerderaggregat;
+
+    VIEW v_SK_Regenueberlauf
+        PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.SK_Regenueberlauf;
+    =
+        ALL OF SK_Regenueberlauf;
+                
+        !!@ name = 5000
+        !!@ ilivalid.msg = "Referenzierter Knoten EinleitstelleRef ist keine Einleitstelle"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               DEFINED(EinleitstelleRef)
+            )
+            OR DEFINED(EinleitstelleRef->Funktion) AND (
+               EinleitstelleRef->Funktion == #Einleitstelle_gewaesserrelevant
+               OR EinleitstelleRef->Funktion == #Einleitstelle_nicht_gewaesserrelevant
+            );
+ 
+    END v_SK_Regenueberlauf;
+
+    VIEW v_SK_Regenueberlaufbecken
+        PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.SK_Regenueberlaufbecken;
+    =
+        ALL OF SK_Regenueberlaufbecken;
+                
+        !!@ name = 5000
+        !!@ ilivalid.msg = "Referenzierter Knoten EinleitstelleRef ist keine Einleitstelle"                 
+         MANDATORY CONSTRAINT
+            NOT (
+               DEFINED(EinleitstelleRef)
+            )
+            OR DEFINED(EinleitstelleRef->Funktion) AND (
+               EinleitstelleRef->Funktion == #Einleitstelle_gewaesserrelevant
+               OR EinleitstelleRef->Funktion == #Einleitstelle_nicht_gewaesserrelevant
+            );
+ 
+    END v_SK_Regenueberlaufbecken;
         
   END VSADSSMini_Validierung;
 

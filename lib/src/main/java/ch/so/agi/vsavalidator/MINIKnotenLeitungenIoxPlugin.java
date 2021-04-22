@@ -63,7 +63,7 @@ public class MINIKnotenLeitungenIoxPlugin implements InterlisFunction {
             return false;
             
         }).collect(Collectors.toList());
-                 
+            
         return new Value(leitungenObjects);
     }
 

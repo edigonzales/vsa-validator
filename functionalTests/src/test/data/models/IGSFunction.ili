@@ -5,55 +5,25 @@ CONTRACTED MODEL IGSFunction
    DOMAIN
       COORD3 (ABSTRACT) = COORD NUMERIC,NUMERIC,NUMERIC;
          
-   !! TODO
-   FUNCTION IGS_filter(objects: OBJECTS OF ANYCLASS; filter: TEXT): OBJECTS OF ANYCLASS;
-   
-   !! TODO
    FUNCTION IGS_min(objects: OBJECTS OF ANYCLASS; attribute: TEXT): NUMERIC;
-   
-   !! TODO
    FUNCTION IGS_max(objects: OBJECTS OF ANYCLASS; attribute: TEXT): NUMERIC;
-   
-   !! TODO
+   FUNCTION IGS_filter(objects: OBJECTS OF ANYCLASS; filter: TEXT): OBJECTS OF ANYCLASS;
+
    FUNCTION IGS_getYear(dummy: TEXT): NUMERIC;
    
-   !! TODO
    FUNCTION IGS_add(value1: NUMERIC; value2: NUMERIC): NUMERIC;
-
-   !! TODO
    FUNCTION IGS_sub(value1: NUMERIC; value2: NUMERIC): NUMERIC;
-    
-   !! TODO
    FUNCTION IGS_div(value1: NUMERIC; value2: NUMERIC): NUMERIC;
-    
-   !! TODO
    FUNCTION IGS_pow(value1: NUMERIC; value2: NUMERIC): NUMERIC;
-
-   !! TODO
    FUNCTION IGS_sqrt(value: NUMERIC): NUMERIC;
-
-   !! TODO
    FUNCTION IGS_abs(value: NUMERIC): NUMERIC;
-
-   !! TODO
-   FUNCTION IGS_getDistance(coord1: COORD3; coord2: COORD3): NUMERIC;
-
-   !! TODO
-   FUNCTION IGS_getDistance2(objects1: OBJECTS OF ANYCLASS; attributePath1: TEXT; objects2: OBJECTS OF ANYCLASS; attributePath2: TEXT): NUMERIC;
-
-   !! TODO
-   FUNCTION IGS_isInsideSurface(objects1: OBJECTS OF ANYCLASS; attributePath1: TEXT; objects2: OBJECTS OF ANYCLASS; attributePath2: TEXT): BOOLEAN;
-
-   !! TODO
-   FUNCTION IGS_getFirstPoint(l: POLYLINE): COORD3;
-
-   !! TODO
-   FUNCTION IGS_getLastPoint(l: POLYLINE): COORD3;
-        
-   !! TODO
-   FUNCTION IGS_getLength(objects: OBJECTS OF ANYCLASS; attributePath: TEXT): NUMERIC;
    
-   !! TODO
+   FUNCTION IGS_getDistance(coord1: COORD3; coord2: COORD3): NUMERIC;
+   FUNCTION IGS_getDistance2(objects1: OBJECTS OF ANYCLASS; attributePath1: TEXT; objects2: OBJECTS OF ANYCLASS; attributePath2: TEXT): NUMERIC;
+   FUNCTION IGS_isInsideSurface(objects1: OBJECTS OF ANYCLASS; attributePath1: TEXT; objects2: OBJECTS OF ANYCLASS; attributePath2: TEXT): BOOLEAN;
+   FUNCTION IGS_getFirstPoint(l: POLYLINE): COORD3;
+   FUNCTION IGS_getLastPoint(l: POLYLINE): COORD3;        
+   FUNCTION IGS_getLength(objects: OBJECTS OF ANYCLASS; attributePath: TEXT): NUMERIC;
    FUNCTION IGS_getArea(objects: OBJECTS OF ANYCLASS; attributePath: TEXT): NUMERIC;
    
 END IGSFunction.
