@@ -1098,6 +1098,7 @@ public class Teileinzugsgebiet {
         assertFalse(content.contains("Error"));
     }
     
+    @Disabled
     @Test
     public void Cid_4320_fail(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
@@ -1115,6 +1116,7 @@ public class Teileinzugsgebiet {
         assertTrue(content.contains("Error: VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet: Intersection coord1 (2600010.000, 1200003.333)"));
     }
     
+    @Disabled
     @Test
     public void Cid_4320_ok(@TempDir Path tempDir) throws Exception {
         String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
