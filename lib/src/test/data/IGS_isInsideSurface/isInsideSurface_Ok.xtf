@@ -41,6 +41,27 @@
             <COORD><C1>2600005.000</C1><C2>1200005.000</C2></COORD>
         </TextPos>
       </VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet>
+      
+      <VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet TID="deg5mQXX20003002">
+        <Letzte_Aenderung>20201223</Letzte_Aenderung>
+        <DatenherrRef REF="deg5mQXX20000001"/>
+        <DatenlieferantRef REF="deg5mQXX20000001"/>
+        <Bezeichnung>Teileinzugsgebiet2</Bezeichnung>
+        <Perimeter>
+          <SURFACE>
+            <BOUNDARY>
+              <POLYLINE>
+                <COORD><C1>2600000.000</C1><C2>1200000.000</C2></COORD>
+                <COORD><C1>2600010.000</C1><C2>1200000.000</C2></COORD>
+                <COORD><C1>2600010.000</C1><C2>1200010.000</C2></COORD>
+                <COORD><C1>2600000.000</C1><C2>1200010.000</C2></COORD>
+                <COORD><C1>2600000.000</C1><C2>1200000.000</C2></COORD>
+              </POLYLINE>
+            </BOUNDARY>
+          </SURFACE>
+        </Perimeter>
+      </VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet>
+
     </VSADSSMINI_2020_LV95.VSADSSMini>
   </DATASECTION>
 </TRANSFER>

@@ -61,7 +61,7 @@ public class IGSIsInsideSurfaceIoxPlugin implements InterlisFunction {
 
         IomObject secondObj = (IomObject) actualArguments[2].getComplexObjects().toArray()[0];
         String secondAttributePath = actualArguments[3].getValue();
-        
+
         Value firstValue = null;
         Value secondValue = null;
         try {
@@ -70,6 +70,10 @@ public class IGSIsInsideSurfaceIoxPlugin implements InterlisFunction {
         } catch (Ili2cException e) {
             e.printStackTrace();
             logger.addEvent(logger.logErrorMsg("Could not parse object or attribute path."));
+            return Value.createSkipEvaluation();
+        }
+        
+        if (firstValue.getComplexObjects() == null || secondValue.getComplexObjects() == null) {
             return Value.createSkipEvaluation();
         }
         
