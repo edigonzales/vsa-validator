@@ -906,9 +906,10 @@ VERSION "2020-11-12"  =
                )
             ) <= 0.001;
 
-        !!@ name = 4320
-        !!@ ilivalid.msg = "Überlappendes Teileinzugsgebiet"
-        SET CONSTRAINT INTERLIS.areAreas(ALL, UNDEFINED, >> Perimeter);
+        !! Sehr langsam. Ohne ObjectPool?
+        !! !!@ name = 4320
+        !! !!@ ilivalid.msg = "Überlappendes Teileinzugsgebiet"
+        !! SET CONSTRAINT INTERLIS.areAreas(ALL, UNDEFINED, >> Perimeter);
 
         !!@ name = 4330_01
         !!@ ilivalid.msg = "Grosse Distanz zum Anschlussknoten (SW_Ist)"
