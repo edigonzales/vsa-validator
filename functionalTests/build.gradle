@@ -38,5 +38,5 @@ task completeTest(type: Test) {
     useJUnitPlatform {
         includeTags 'complete'
     }
-    maxHeapSize = '2G'
+    maxHeapSize = '12G'
 }

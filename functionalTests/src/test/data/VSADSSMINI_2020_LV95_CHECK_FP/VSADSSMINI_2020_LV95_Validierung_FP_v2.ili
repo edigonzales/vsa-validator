@@ -1,0 +1,34 @@
+INTERLIS 2.3;
+
+CONTRACTED MODEL VSADSSMINI_2020_LV95_Validierung_FP_v2 (de)
+AT "https://geo.so.ch"
+VERSION "2020-11-12"  =
+  
+  IMPORTS VSADSSMINI_2020_LV95;
+  IMPORTS UNQUALIFIED INTERLIS;
+  IMPORTS Text;
+  IMPORTS Math;
+  IMPORTS UNQUALIFIED IGSFunction;
+  IMPORTS UNQUALIFIED MINIFunction;
+  
+  VIEW TOPIC VSADSSMini_Validierung = 
+  DEPENDS ON VSADSSMINI_2020_LV95.VSADSSMini;
+  
+    VIEW v_Teileinzugsgebiet
+        PROJECTION OF VSADSSMINI_2020_LV95.VSADSSMini.Teileinzugsgebiet;
+    =
+        ALL OF Teileinzugsgebiet;
+
+        !!@ name = 4340
+        !!@ ilivalid.msg = "Beschriftung ausserhalb Teileinzugsgebiet"
+         MANDATORY CONSTRAINT IGS_isInsideSurface(
+            THIS, "Perimeter",
+            THIS, "TextPos"
+         );
+
+    END v_Teileinzugsgebiet;
+
+        
+  END VSADSSMini_Validierung;
+
+END VSADSSMINI_2020_LV95_Validierung_FP_v2.
