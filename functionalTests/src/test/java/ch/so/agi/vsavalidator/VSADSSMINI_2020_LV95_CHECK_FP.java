@@ -20,7 +20,7 @@ public class VSADSSMINI_2020_LV95_CHECK_FP {
 
     @Test
     @Tag("complete")
-    public void completeBirmensdorf(@TempDir Path tempDir) throws Exception {
+    public void completeDataset(@TempDir Path tempDir) throws Exception {
 //        String logFileName = Paths.get(tempDir.toFile().getAbsolutePath(), LOGFILE_NAME).toFile().getAbsolutePath();
         String logFileName = Paths.get("/Users/stefan/tmp/", LOGFILE_NAME).toFile().getAbsolutePath();
         
@@ -29,7 +29,7 @@ public class VSADSSMINI_2020_LV95_CHECK_FP {
         settings.setValue(Validator.SETTING_ILIDIRS, TEST_IN+"models/;"+TEST_IN+"VSADSSMINI_2020_LV95_CHECK_FP/");
         settings.setValue(Validator.SETTING_CONFIGFILE, TEST_IN+"VSADSSMINI_2020_LV95_CHECK_FP/config.toml");
         settings.setValue(Validator.SETTING_PLUGINFOLDER, "../lib/build/libs");
-        //EhiLogger.getInstance().setTraceFilter(false);
+        EhiLogger.getInstance().setTraceFilter(false);
 
 //        boolean valid = Validator.runValidation("/Users/stefan/sources/afu_ipw_testdaten/gep/birmensdorf/orig/bdf_sew_dss-mini-20_20210212.xtf", settings);
         boolean valid = Validator.runValidation("/Users/stefan/sources/afu_ipw_testdaten/gep/bern/fix/Bern_Mini_2020_org_Massnahme.xtf", settings);

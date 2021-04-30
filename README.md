@@ -26,5 +26,5 @@
 
 ## Resultierende ilivalidator-Bugs
 - https://github.com/claeis/ilivalidator/issues/300 -> Im Validierungs-Ili fehlen diese Constraints
-- https://github.com/claeis/ilivalidator/issues/301 (workaround vorhanden)
+- https://github.com/claeis/ilivalidator/issues/301 (Workaround vorhanden)
 - https://github.com/claeis/ilivalidator/issues/304 (Workaround vorhanden)
